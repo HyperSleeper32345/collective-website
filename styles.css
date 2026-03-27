@@ -1,0 +1,1112 @@
+/* ==========================================================================
+   COLLECTIVE — styles.css
+   Complete design system: colours, typography, layout, dark mode,
+   container queries, responsive utilities.
+   ========================================================================== */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* ==========================================================================
+   1. CSS CUSTOM PROPERTIES
+   ========================================================================== */
+:root {
+  /* --- Fonts (single-variable swap when Canela is ready) --- */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* --- Light-mode palette (default) --- */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F5F5F7;
+  --color-bg-dark: #0A0A0F;
+  --color-text-heading: #0A0A0F;
+  --color-text-body: #6B7280;
+  --color-text-light: #FFFFFF;
+  --color-text-muted: rgba(255, 255, 255, 0.55);
+  --color-accent: #5FA8FF;
+  --color-accent-hover: #4A93E8;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-dark: rgba(255, 255, 255, 0.1);
+
+  /* --- Placeholder block colours --- */
+  --color-placeholder: #E5E7EB;
+  --color-placeholder-dark: #1A1A24;
+
+  /* --- Fluid typography --- */
+  --text-hero: clamp(36px, 5vw, 64px);
+  --text-page-title: clamp(28px, 4vw, 48px);
+  --text-section: clamp(24px, 3vw, 36px);
+  --text-body: 16px;
+
+  /* --- Spacing scale --- */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+
+  /* --- Layout --- */
+  --container-max: 1200px;
+  --container-narrow: 800px;
+  --nav-height: 72px;
+  --border-radius: 6px;
+  --transition-base: 0.25s ease;
+}
+
+/* ==========================================================================
+   2. DARK MODE OVERRIDES
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #0A0A0F;
+    --color-bg-secondary: #12121A;
+    --color-text-heading: #FFFFFF;
+    --color-text-body: #9CA3AF;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-placeholder: #1E1E2A;
+    --color-placeholder-dark: #16161F;
+  }
+}
+
+/* ==========================================================================
+   3. RESET & BASE
+   ========================================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--color-text-body);
+  background-color: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font: inherit;
+}
+
+/* ==========================================================================
+   4. TYPOGRAPHY
+   ========================================================================== */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--color-text-heading);
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+h1 { font-size: var(--text-hero); }
+h2 { font-size: var(--text-page-title); }
+h3 { font-size: var(--text-section); }
+
+p {
+  max-width: 65ch;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   5. LAYOUT UTILITIES
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section--dark {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+}
+
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--color-text-light);
+}
+
+.section--dark p {
+  color: var(--color-text-muted);
+}
+
+.section--dark .eyebrow {
+  color: var(--color-text-muted);
+}
+
+.section--alt {
+  background-color: var(--color-bg-secondary);
+}
+
+/* Container query wrapper */
+.cq-container {
+  container-type: inline-size;
+}
+
+/* ==========================================================================
+   6. BUTTONS
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 14px 28px;
+  border-radius: var(--border-radius);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+}
+
+.btn--primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-text-light);
+  border: 1px solid var(--color-border-dark);
+}
+
+.btn--secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Secondary button on light backgrounds */
+.section:not(.section--dark) .btn--secondary,
+.section--alt .btn--secondary {
+  color: var(--color-text-heading);
+  border-color: var(--color-border);
+}
+
+.section:not(.section--dark) .btn--secondary:hover,
+.section--alt .btn--secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+/* ==========================================================================
+   7. NAVIGATION
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  background-color: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border-dark);
+  transition: background-color var(--transition-base);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-logo {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-light);
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color var(--transition-base);
+  padding: 8px 0;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--color-text-light);
+}
+
+/* Services dropdown */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color var(--transition-base);
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.nav-dropdown-toggle:hover {
+  color: var(--color-text-light);
+}
+
+.nav-dropdown-toggle svg {
+  width: 12px;
+  height: 12px;
+  transition: transform var(--transition-base);
+}
+
+.nav-dropdown.open .nav-dropdown-toggle svg {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 180px;
+  background-color: #16161F;
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--border-radius);
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-dropdown-menu a:hover {
+  color: var(--color-text-light);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Header CTA */
+.nav-cta {
+  margin-left: var(--space-sm);
+}
+
+.nav-cta .btn {
+  padding: 10px 20px;
+  font-size: 13px;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text-light);
+  border-radius: 2px;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile nav */
+@media (max-width: 900px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: var(--space-lg) var(--space-md);
+    background-color: rgba(10, 10, 15, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    overflow-y: auto;
+  }
+
+  .nav-links.open {
+    transform: translateX(0);
+  }
+
+  .nav-links a,
+  .nav-dropdown-toggle {
+    font-size: 18px;
+    padding: 14px 0;
+    width: 100%;
+    border-bottom: 1px solid var(--color-border-dark);
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    transform: none;
+    background: transparent;
+    border: none;
+    padding: 0 0 0 var(--space-md);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
+    opacity: 0;
+  }
+
+  .nav-dropdown.open .nav-dropdown-menu {
+    max-height: 200px;
+    opacity: 1;
+  }
+
+  .nav-dropdown-menu a {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-border-dark);
+  }
+
+  .nav-cta {
+    margin-left: 0;
+    margin-top: var(--space-md);
+    width: 100%;
+  }
+
+  .nav-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   8. HERO SECTIONS
+   ========================================================================== */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--nav-height) + var(--space-xl));
+  padding-bottom: var(--space-2xl);
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero h1 {
+  color: var(--color-text-light);
+  margin-bottom: var(--space-md);
+}
+
+.hero .eyebrow {
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+}
+
+.hero .subheadline {
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin-bottom: var(--space-lg);
+}
+
+.hero .support-line {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: var(--space-md);
+}
+
+/* Interior page hero (shorter) */
+.hero--interior {
+  min-height: 60vh;
+}
+
+/* ==========================================================================
+   9. BUTTERFLY ANIMATION (homepage hero)
+   ========================================================================== */
+.butterfly-container {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(280px, 30vw, 480px);
+  height: clamp(280px, 30vw, 480px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .butterfly-container {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: var(--space-xl) auto 0;
+    opacity: 0.5;
+    width: clamp(200px, 60vw, 320px);
+    height: clamp(200px, 60vw, 320px);
+  }
+}
+
+.butterfly-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Wing breathing animation */
+.butterfly-wing-left {
+  transform-origin: 50% 50%;
+  animation: wingLeft 4s ease-in-out infinite;
+}
+
+.butterfly-wing-right {
+  transform-origin: 50% 50%;
+  animation: wingRight 4s ease-in-out infinite;
+}
+
+@keyframes wingLeft {
+  0%, 100% { transform: scaleX(1) rotate(0deg); }
+  50% { transform: scaleX(0.92) rotate(-2deg); }
+}
+
+@keyframes wingRight {
+  0%, 100% { transform: scaleX(1) rotate(0deg); }
+  50% { transform: scaleX(0.92) rotate(2deg); }
+}
+
+/* Scan line */
+.scan-line {
+  animation: scanMove 6s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+  0%, 100% { transform: translateY(-40%); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translateY(40%); opacity: 1; }
+  60% { opacity: 0; }
+}
+
+/* Vein glow */
+.wing-veins {
+  opacity: 0;
+  animation: veinGlow 6s ease-in-out infinite;
+}
+
+@keyframes veinGlow {
+  0%, 20% { opacity: 0; }
+  35%, 55% { opacity: 0.7; }
+  70%, 100% { opacity: 0; }
+}
+
+/* Grid overlay on wings */
+.wing-grid {
+  opacity: 0;
+  animation: gridReveal 6s ease-in-out infinite;
+}
+
+@keyframes gridReveal {
+  0%, 25% { opacity: 0; }
+  40%, 50% { opacity: 0.3; }
+  65%, 100% { opacity: 0; }
+}
+
+/* ==========================================================================
+   10. CARDS & GRID
+   ========================================================================== */
+.card-grid {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-md);
+}
+
+@container (min-width: 500px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@container (min-width: 800px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@container (min-width: 1000px) {
+  .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.card {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-lg);
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.card h4 {
+  font-size: 18px;
+  margin-bottom: var(--space-xs);
+}
+
+.card p {
+  font-size: 15px;
+  color: var(--color-text-body);
+}
+
+/* Dark cards */
+.section--dark .card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-border-dark);
+}
+
+.section--dark .card:hover {
+  border-color: var(--color-accent);
+}
+
+.section--dark .card h4 {
+  color: var(--color-text-light);
+}
+
+.section--dark .card p {
+  color: var(--color-text-muted);
+}
+
+/* Card with accent top border */
+.card--accent {
+  border-top: 2px solid var(--color-accent);
+}
+
+/* ==========================================================================
+   11. IMAGE PLACEHOLDERS
+   ========================================================================== */
+/* IMAGE PLACEHOLDER */
+.placeholder {
+  background-color: var(--color-placeholder);
+  border-radius: var(--border-radius);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.section--dark .placeholder {
+  background-color: var(--color-placeholder-dark);
+}
+
+/* ==========================================================================
+   12. SERVICES / LAYER CARDS
+   ========================================================================== */
+.layer-card {
+  container-type: inline-size;
+  padding: var(--space-lg);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-secondary);
+  transition: border-color var(--transition-base);
+}
+
+.layer-card:hover {
+  border-color: var(--color-accent);
+}
+
+.layer-card .eyebrow {
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.layer-card h4 {
+  margin-bottom: var(--space-xs);
+}
+
+.section--dark .layer-card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: var(--color-border-dark);
+}
+
+.section--dark .layer-card h4 {
+  color: var(--color-text-light);
+}
+
+.section--dark .layer-card p {
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   13. CTA BLOCK (full-width final section)
+   ========================================================================== */
+.cta-block {
+  text-align: center;
+  padding-block: var(--space-3xl);
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+}
+
+.cta-block h2 {
+  color: var(--color-text-light);
+  margin-bottom: var(--space-md);
+}
+
+.cta-block p {
+  color: var(--color-text-muted);
+  margin-inline: auto;
+  margin-bottom: var(--space-lg);
+}
+
+.cta-block .btn-group {
+  justify-content: center;
+}
+
+/* ==========================================================================
+   14. CONTACT FORM
+   ========================================================================== */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 560px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-heading);
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-heading);
+  font-size: 15px;
+  transition: border-color var(--transition-base);
+  min-height: 44px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-group label {
+    color: var(--color-text-light);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border);
+    color: var(--color-text-light);
+  }
+}
+
+/* ==========================================================================
+   15. INSIGHTS ARTICLE CARDS
+   ========================================================================== */
+.article-card {
+  container-type: inline-size;
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-lg);
+}
+
+.article-card:last-child {
+  border-bottom: none;
+}
+
+.article-card .eyebrow {
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.article-card h3 {
+  font-size: clamp(20px, 2.5vw, 28px);
+  margin-bottom: var(--space-xs);
+}
+
+.article-card p {
+  margin-bottom: var(--space-sm);
+}
+
+.article-card a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-accent);
+  transition: color var(--transition-base);
+}
+
+.article-card a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ==========================================================================
+   16. FOOTER
+   ========================================================================== */
+.site-footer {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  padding-block: var(--space-2xl) var(--space-lg);
+  border-top: 1px solid var(--color-border-dark);
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.footer-brand .site-logo {
+  margin-bottom: var(--space-sm);
+}
+
+.footer-brand .tagline {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.footer-brand .support-line {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-xl);
+}
+
+.footer-nav a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color var(--transition-base);
+  padding: 4px 0;
+}
+
+.footer-nav a:hover {
+  color: var(--color-text-light);
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border-dark);
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.footer-bottom a {
+  color: rgba(255, 255, 255, 0.55);
+  transition: color var(--transition-base);
+}
+
+.footer-bottom a:hover {
+  color: var(--color-text-light);
+}
+
+/* ==========================================================================
+   17. SECTION INTRO (eyebrow + heading + body pattern)
+   ========================================================================== */
+.section-intro {
+  max-width: var(--container-narrow);
+  margin-bottom: var(--space-xl);
+}
+
+.section-intro .eyebrow {
+  margin-bottom: var(--space-sm);
+}
+
+.section-intro h2 {
+  margin-bottom: var(--space-md);
+}
+
+/* Centred intro variant */
+.section-intro--center {
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* ==========================================================================
+   18. METRIC / STAT ITEMS
+   ========================================================================== */
+.metric-list {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-md);
+}
+
+@container (min-width: 500px) {
+  .metric-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+@container (min-width: 800px) {
+  .metric-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.metric-item {
+  padding: var(--space-md);
+  border-left: 2px solid var(--color-accent);
+}
+
+.metric-item h4 {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin-bottom: 4px;
+}
+
+.metric-item p {
+  font-size: 15px;
+}
+
+/* ==========================================================================
+   19. TWO-COLUMN LAYOUT
+   ========================================================================== */
+.two-col {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@container (min-width: 700px) {
+  .two-col { grid-template-columns: 1fr 1fr; }
+}
+
+/* ==========================================================================
+   20. LIST STYLES
+   ========================================================================== */
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.check-list li {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.check-list li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+}
+
+/* ==========================================================================
+   21. PAGE-SPECIFIC: ABOUT FOUNDER SECTION
+   ========================================================================== */
+.founder-section {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+@container (min-width: 700px) {
+  .founder-section { grid-template-columns: 1fr 2fr; }
+}
+
+/* IMAGE PLACEHOLDER */
+.founder-photo {
+  background-color: var(--color-placeholder);
+  border-radius: var(--border-radius);
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* ==========================================================================
+   22. UTILITY CLASSES
+   ========================================================================== */
+.text-center { text-align: center; }
+.text-accent { color: var(--color-accent); }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mt-xl { margin-top: var(--space-xl); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.mb-xl { margin-bottom: var(--space-xl); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ==========================================================================
+   23. GLOBAL RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+@media (max-width: 600px) {
+  .section {
+    padding-block: var(--space-xl);
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + var(--space-lg));
+    padding-bottom: var(--space-xl);
+  }
+
+  .hero--interior {
+    min-height: auto;
+  }
+
+  .cta-block {
+    padding-block: var(--space-2xl);
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
