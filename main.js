@@ -18,7 +18,9 @@
     hamburger.addEventListener('click', function () {
       hamburger.classList.toggle('active');
       navLinks.classList.toggle('open');
-      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+      var isOpen = navLinks.classList.contains('open');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      document.body.classList.toggle('mobile-menu-open', isOpen);
     });
 
     /* Close mobile menu when a link is clicked */
@@ -27,6 +29,8 @@
         hamburger.classList.remove('active');
         navLinks.classList.remove('open');
         document.body.style.overflow = '';
+        document.body.classList.remove('mobile-menu-open');
+        if (dropdown) dropdown.classList.remove('open');
       });
     });
   }
@@ -52,6 +56,8 @@
       hamburger.classList.remove('active');
       navLinks.classList.remove('open');
       document.body.style.overflow = '';
+      document.body.classList.remove('mobile-menu-open');
+      if (dropdown) dropdown.classList.remove('open');
     }
   });
 
