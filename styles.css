@@ -419,21 +419,31 @@ p {
     display: flex;
   }
 
+  body.mobile-menu-open .site-header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: #0A0A0F;
+    border-bottom-color: transparent;
+  }
+
   .nav-links {
     position: fixed;
-    top: var(--nav-height);
+    top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 9999;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 0;
-    padding: var(--space-lg) var(--space-md);
-    background-color: rgba(10, 10, 15, 0.98);
+    padding: var(--space-xl) var(--space-md);
+    background-color: #0A0A0F;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     transform: translateX(100%);
-    transition: transform 0.35s ease;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
   }
 
@@ -443,10 +453,29 @@ p {
 
   .nav-links a,
   .nav-dropdown-toggle {
-    font-size: 18px;
-    padding: 14px 0;
+    font-size: 22px;
+    padding: 24px 0;
     width: 100%;
+    text-align: center;
+    justify-content: center;
+    border-bottom: none;
+  }
+
+  .nav-links > li {
+    width: 100%;
+    text-align: center;
     border-bottom: 1px solid var(--color-border-dark);
+  }
+
+  .nav-links > li:last-child {
+    border-bottom: none;
+  }
+
+  .hamburger.active {
+    position: fixed;
+    top: 20px;
+    right: var(--space-md);
+    z-index: 10000;
   }
 
   .nav-dropdown-menu {
@@ -454,7 +483,7 @@ p {
     transform: none;
     background: transparent;
     border: none;
-    padding: 0 0 0 var(--space-md);
+    padding: 0;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease, opacity 0.25s ease;
@@ -462,13 +491,15 @@ p {
   }
 
   .nav-dropdown.open .nav-dropdown-menu {
-    max-height: 200px;
+    max-height: 300px;
     opacity: 1;
   }
 
   .nav-dropdown-menu a {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--color-border-dark);
+    padding: 16px 0;
+    font-size: 18px;
+    border-bottom: none;
+    color: var(--color-text-muted);
   }
 
   .nav-cta {
