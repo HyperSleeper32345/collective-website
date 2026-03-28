@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+<style>
+  .bg { fill: #0A0A0F; }
+  .wing-outer { fill: none; stroke: rgba(255,255,255,0.9); stroke-width: 1.6; }
+  .wing-inner { fill: none; stroke: rgba(255,255,255,0.45); stroke-width: 1.1; }
+  .wing-lower { fill: none; stroke: rgba(255,255,255,0.6); stroke-width: 1.1; }
+  .vein { stroke: #5FA8FF; stroke-width: 0.8; }
+  .vein-1 { opacity: 0.7; }
+  .vein-2 { opacity: 0.6; }
+  .body { stroke: rgba(255,255,255,0.95); stroke-width: 2.2; stroke-linecap: round; }
+  .antenna { fill: none; stroke: rgba(255,255,255,0.7); stroke-width: 1.1; }
+  .tip { fill: #5FA8FF; opacity: 0.85; }
+  @media (prefers-color-scheme: light) {
+    .bg { fill: #FFFFFF; }
+    .wing-outer { stroke: rgba(10,10,15,0.8); }
+    .wing-inner { stroke: rgba(10,10,15,0.35); }
+    .wing-lower { stroke: rgba(10,10,15,0.5); }
+    .body { stroke: rgba(10,10,15,0.85); }
+    .antenna { stroke: rgba(10,10,15,0.6); }
+    .tip { fill: #2B7DE9; }
+    .vein { stroke: #2B7DE9; }
+  }
+</style>
+<rect class="bg" width="400" height="400"/>
+<path class="wing-outer" d="M200 200 C180 160,120 100,90 80 C60 60,40 90,50 130 C55 155,70 180,100 195 C130 210,170 210,200 200Z"/>
+<path class="wing-inner" d="M200 200 C185 175,140 130,110 115 C85 102,65 120,72 150 C78 170,90 188,110 195 C140 205,175 207,200 200Z"/>
+<line class="vein vein-1" x1="200" y1="200" x2="90" y2="80"/>
+<line class="vein vein-2" x1="200" y1="200" x2="50" y2="130"/>
+<line class="vein vein-2" x1="200" y1="200" x2="100" y2="195"/>
+<path class="wing-outer" d="M200 200 C220 160,280 100,310 80 C340 60,360 90,350 130 C345 155,330 180,300 195 C270 210,230 210,200 200Z"/>
+<path class="wing-inner" d="M200 200 C215 175,260 130,290 115 C315 102,335 120,328 150 C322 170,310 188,290 195 C260 205,225 207,200 200Z"/>
+<line class="vein vein-1" x1="200" y1="200" x2="310" y2="80"/>
+<line class="vein vein-2" x1="200" y1="200" x2="350" y2="130"/>
+<line class="vein vein-2" x1="200" y1="200" x2="300" y2="195"/>
+<path class="wing-lower" d="M200 200 C180 220,130 270,115 290 C100 310,120 330,150 310 C170 296,188 270,195 240 C200 220,200 210,200 200Z"/>
+<path class="wing-lower" d="M200 200 C220 220,270 270,285 290 C300 310,280 330,250 310 C230 296,212 270,205 240 C200 220,200 210,200 200Z"/>
+<line class="body" x1="200" y1="140" x2="200" y2="280"/>
+<path class="antenna" d="M200 145 C195 125,180 105,175 95"/>
+<path class="antenna" d="M200 145 C205 125,220 105,225 95"/>
+<circle class="tip" cx="175" cy="95" r="2.8"/>
+<circle class="tip" cx="225" cy="95" r="2.8"/>
+</svg>
