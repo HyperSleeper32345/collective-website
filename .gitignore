@@ -1,1 +1,15 @@
-.claude/
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.local
+
+# Build artifacts (none expected for this static site, but defensive)
+node_modules/
+dist/
