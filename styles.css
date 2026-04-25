@@ -518,15 +518,34 @@ p {
    8. HERO SECTIONS
    ========================================================================== */
 .hero {
+  container-type: inline-size;
+  container-name: hero;
   min-height: 90vh;
-  display: flex;
-  align-items: center;
   padding-top: calc(var(--nav-height) + var(--space-xl));
   padding-bottom: var(--space-2xl);
+  padding-inline: max(var(--space-md), calc((100% - var(--container-max)) / 2));
   background-color: var(--color-bg-dark);
   color: var(--color-text-light);
   position: relative;
   overflow: hidden;
+}
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  align-items: center;
+  text-align: center;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+/* Mobile order: 1) eyebrow  2) emblem  3) text block */
+
+.hero-text {
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
 }
 
 .hero h1 {
@@ -536,7 +555,7 @@ p {
 
 .hero .eyebrow {
   color: var(--color-accent);
-  margin-bottom: var(--space-md);
+  margin-bottom: 0; /* spacing handled by .hero-inner gap (mobile) and grid row-gap (desktop) */
 }
 
 .hero .subheadline {
@@ -544,7 +563,7 @@ p {
   line-height: 1.6;
   color: var(--color-text-muted);
   max-width: 600px;
-  margin-bottom: var(--space-lg);
+  margin: 0 auto var(--space-lg);
 }
 
 .hero .support-line {
@@ -553,98 +572,148 @@ p {
   margin-top: var(--space-md);
 }
 
-/* Interior page hero (shorter) */
+.hero .btn-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+/* SIDE-BY-SIDE LAYOUT once container has enough room.
+   Use CSS Grid: eyebrow + text stack on the left, emblem spans on the right. */
+@container hero (min-width: 880px) {
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-md);
+    align-items: center;
+    text-align: left;
+  }
+  .hero .eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    text-align: left;
+    justify-self: start;
+  }
+  .hero-emblem {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+    max-width: 560px;
+    justify-self: center;
+  }
+  .hero-text {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    text-align: left;
+    max-width: 560px;
+  }
+  .hero .subheadline { margin-left: 0; margin-right: 0; }
+  .hero .btn-group { justify-content: flex-start; }
+}
+
+/* Interior page hero (shorter, no emblem) */
 .hero--interior {
   min-height: 60vh;
 }
 
 /* ==========================================================================
-   9. BUTTERFLY ANIMATION (homepage hero)
+   9. DRAGONFLY ANIMATION (homepage hero)
    ========================================================================== */
-.butterfly-container {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(280px, 30vw, 480px);
-  height: clamp(280px, 30vw, 480px);
-  opacity: 0.6;
+.hero-emblem {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   pointer-events: none;
 }
 
-@media (max-width: 900px) {
-  .butterfly-container {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    margin: var(--space-xl) auto 0;
-    opacity: 0.5;
-    width: clamp(200px, 60vw, 320px);
-    height: clamp(200px, 60vw, 320px);
-  }
+.dragonfly-svg {
+  width: clamp(260px, 70cqw, 520px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  display: block;
 }
 
-.butterfly-svg {
-  width: 100%;
-  height: 100%;
+/* Wing breathing */
+.fw-l { transform-origin: 470px 354px; animation: fwBreathL 6s ease-in-out infinite; }
+.fw-r { transform-origin: 530px 354px; animation: fwBreathR 6s ease-in-out infinite; }
+.hw-l { transform-origin: 472px 390px; animation: hwBreathL 6s ease-in-out infinite; }
+.hw-r { transform-origin: 528px 390px; animation: hwBreathR 6s ease-in-out infinite; }
+
+@keyframes fwBreathL { 0%,55%,100% { transform: rotate(0deg); } 72% { transform: rotate(0.5deg); } 88% { transform: rotate(-0.2deg); } }
+@keyframes fwBreathR { 0%,55%,100% { transform: rotate(0deg); } 72% { transform: rotate(-0.5deg); } 88% { transform: rotate(0.2deg); } }
+@keyframes hwBreathL { 0%,55%,100% { transform: rotate(0deg); } 72% { transform: rotate(-1.1deg); } 88% { transform: rotate(0.4deg); } }
+@keyframes hwBreathR { 0%,55%,100% { transform: rotate(0deg); } 72% { transform: rotate(1.1deg); } 88% { transform: rotate(-0.4deg); } }
+
+/* Eye breathing */
+.eyes { transform-origin: 500px 258px; animation: eyeBreath 3.4s ease-in-out infinite; }
+@keyframes eyeBreath { 0%,100% { transform: scale(1); } 50% { transform: scale(1.018); } }
+
+/* Venation reveal */
+.venation { opacity: 0; animation: venReveal 8s ease-in-out infinite; }
+@keyframes venReveal {
+  0%, 18% { opacity: 0; }
+  25% { opacity: 0.12; }
+  35% { opacity: 0.4; }
+  45% { opacity: 0.6; }
+  62% { opacity: 0.6; }
+  78% { opacity: 0.18; }
+  90%, 100% { opacity: 0; }
 }
 
-/* Wing breathing animation */
-.butterfly-wing-left {
-  transform-origin: 50% 50%;
-  animation: wingLeft 4s ease-in-out infinite;
-}
-
-.butterfly-wing-right {
-  transform-origin: 50% 50%;
-  animation: wingRight 4s ease-in-out infinite;
-}
-
-@keyframes wingLeft {
-  0%, 100% { transform: scaleX(1) rotate(0deg); }
-  50% { transform: scaleX(0.92) rotate(-2deg); }
-}
-
-@keyframes wingRight {
-  0%, 100% { transform: scaleX(1) rotate(0deg); }
-  50% { transform: scaleX(0.92) rotate(2deg); }
+.eye-facets { opacity: 0; animation: facetReveal 8s ease-in-out infinite; }
+@keyframes facetReveal {
+  0%, 22% { opacity: 0; }
+  32% { opacity: 0.3; }
+  45% { opacity: 0.55; }
+  62% { opacity: 0.55; }
+  78% { opacity: 0.15; }
+  90%, 100% { opacity: 0; }
 }
 
 /* Scan line */
-.scan-line {
-  animation: scanMove 6s ease-in-out infinite;
+.scan { opacity: 0; animation: scan 8s ease-in-out infinite; }
+@keyframes scan {
+  0%, 18% { opacity: 0; transform: translateY(-220px); }
+  28% { opacity: 1; transform: translateY(-100px); }
+  55% { opacity: 1; transform: translateY(120px); }
+  72% { opacity: 0.6; transform: translateY(220px); }
+  85%, 100% { opacity: 0; transform: translateY(280px); }
 }
 
-@keyframes scanMove {
-  0%, 100% { transform: translateY(-40%); opacity: 0; }
-  10% { opacity: 1; }
-  50% { transform: translateY(40%); opacity: 1; }
-  60% { opacity: 0; }
+/* Pulse rings */
+.ring-1 { animation: ring1 8s ease-out infinite; }
+.ring-2 { animation: ring2 8s ease-out infinite; }
+.ring-3 { animation: ring3 8s ease-out infinite; }
+
+@keyframes ring1 {
+  0%, 30% { r: 0; opacity: 0; stroke-width: 1.5; }
+  45% { r: 60; opacity: 0.6; stroke-width: 1.2; }
+  70%, 100% { r: 200; opacity: 0; stroke-width: 0.4; }
+}
+@keyframes ring2 {
+  0%, 38% { r: 0; opacity: 0; stroke-width: 1.5; }
+  52% { r: 60; opacity: 0.5; stroke-width: 1.2; }
+  78%, 100% { r: 220; opacity: 0; stroke-width: 0.4; }
+}
+@keyframes ring3 {
+  0%, 46% { r: 0; opacity: 0; stroke-width: 1.5; }
+  60% { r: 60; opacity: 0.4; stroke-width: 1.2; }
+  85%, 100% { r: 240; opacity: 0; stroke-width: 0.4; }
 }
 
-/* Vein glow */
-.wing-veins {
-  opacity: 0;
-  animation: veinGlow 6s ease-in-out infinite;
-}
-
-@keyframes veinGlow {
-  0%, 20% { opacity: 0; }
-  35%, 55% { opacity: 0.7; }
-  70%, 100% { opacity: 0; }
-}
-
-/* Grid overlay on wings */
-.wing-grid {
-  opacity: 0;
-  animation: gridReveal 6s ease-in-out infinite;
-}
-
-@keyframes gridReveal {
-  0%, 25% { opacity: 0; }
-  40%, 50% { opacity: 0.3; }
-  65%, 100% { opacity: 0; }
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .fw-l, .fw-r, .hw-l, .hw-r, .eyes, .venation, .eye-facets, .scan, .ring-1, .ring-2, .ring-3 {
+    animation: none;
+  }
+  .venation, .eye-facets { opacity: 0.5; }
 }
 
 /* ==========================================================================
