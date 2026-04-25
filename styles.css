@@ -520,24 +520,13 @@ p {
 .hero {
   min-height: 90vh;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: var(--space-xl);
   padding-top: calc(var(--nav-height) + var(--space-xl));
   padding-bottom: var(--space-2xl);
-  padding-inline: max(var(--space-md), calc((100% - var(--container-max)) / 2));
   background-color: var(--color-bg-dark);
   color: var(--color-text-light);
   position: relative;
   overflow: hidden;
-}
-
-.hero > .container {
-  flex: 1 1 50%;
-  width: auto;
-  max-width: 600px;
-  padding-inline: 0;
-  margin: 0;
 }
 
 .hero h1 {
@@ -573,21 +562,18 @@ p {
    9. DRAGONFLY ANIMATION (homepage hero)
    ========================================================================== */
 .dragonfly-container {
-  position: relative;
-  flex: 1 1 50%;
-  min-width: 480px;
-  max-width: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(320px, 38vw, 560px);
+  aspect-ratio: 1;
   pointer-events: none;
 }
 
 .dragonfly-svg {
   width: 100%;
-  height: auto;
-  max-width: 560px;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   display: block;
 }
 
@@ -671,25 +657,13 @@ p {
 }
 
 @media (max-width: 900px) {
-  .hero {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-lg);
-  }
-
-  .hero > .container {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 100%;
-    padding-inline: var(--space-md);
-  }
-
   .dragonfly-container {
-    flex: 0 0 auto;
-    width: 100%;
-    min-width: 0;
-    max-width: clamp(240px, 70vw, 380px);
-    margin-inline: auto;
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: var(--space-xl) auto 0;
+    width: clamp(240px, 70vw, 420px);
   }
 }
 
