@@ -217,7 +217,7 @@ p {
 
 .btn--primary {
   background-color: var(--color-accent);
-  color: #FFFFFF;
+  color: #0A0A0F;
 }
 
 .btn--primary:hover {
@@ -378,6 +378,14 @@ p {
 .nav-cta .btn {
   padding: 10px 20px;
   font-size: 13px;
+}
+
+/* .nav-links a sets rgba(255,255,255,0.7) and .nav-links a:hover sets white;
+   both outrank .btn--primary on specificity, so the header CTA needs the ink
+   ruling restored here for the resting and hover states. */
+.nav-cta .btn--primary,
+.nav-cta .btn--primary:hover {
+  color: #0A0A0F;
 }
 
 /* Hamburger */
@@ -1006,6 +1014,13 @@ p {
 
 .footer-bottom a:hover {
   color: var(--color-text-light);
+}
+
+/* .footer-bottom a sets rgba(255,255,255,0.55) and outranks .btn--primary on
+   specificity, so the footer CTA needs the ink ruling restored here. */
+.footer-bottom .btn--primary,
+.footer-bottom .btn--primary:hover {
+  color: #0A0A0F;
 }
 
 /* ==========================================================================
