@@ -5,7 +5,9 @@
    ========================================================================== */
 
 /* ---------- Google Fonts ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap');
+/* Loaded in each page head with preconnect plus a stylesheet link, so the
+   font request is not serialised behind this file. Same families, same
+   weights. */
 
 /* ==========================================================================
    1. CSS CUSTOM PROPERTIES
