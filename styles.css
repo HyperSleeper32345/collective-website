@@ -970,6 +970,37 @@ p {
   color: var(--color-accent-hover);
 }
 
+/* Article groups and linked cards (Insights hub) */
+.article-group + .article-group {
+  margin-top: var(--space-xl);
+}
+
+.article-group-label {
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-md);
+}
+
+.article-group .article-card:last-child {
+  border-bottom: none;
+}
+
+a.article-card {
+  display: block;
+}
+
+a.article-card h3 {
+  transition: color var(--transition-base);
+}
+
+a.article-card:hover h3 {
+  color: var(--color-accent);
+}
+
+/* Active nav dropdown cue */
+.nav-dropdown--active .nav-dropdown-toggle {
+  color: var(--color-text-light);
+}
+
 /* ==========================================================================
    16. FOOTER
    ========================================================================== */
