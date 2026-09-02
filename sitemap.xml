@@ -5,39 +5,39 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/system.html</loc>
+    <loc>https://wearecollective.com.au/system</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/services.html</loc>
+    <loc>https://wearecollective.com.au/services</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/pitcher.html</loc>
+    <loc>https://wearecollective.com.au/pitcher</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/catcher.html</loc>
+    <loc>https://wearecollective.com.au/catcher</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/closer.html</loc>
+    <loc>https://wearecollective.com.au/closer</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/collective-os.html</loc>
+    <loc>https://wearecollective.com.au/collective-os</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/about.html</loc>
+    <loc>https://wearecollective.com.au/about</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/insights.html</loc>
+    <loc>https://wearecollective.com.au/insights</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://wearecollective.com.au/contact.html</loc>
+    <loc>https://wearecollective.com.au/contact</loc>
     <priority>0.6</priority>
   </url>
 </urlset>
