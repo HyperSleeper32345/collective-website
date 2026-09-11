@@ -9,8 +9,7 @@
   /* ---------- DOM refs ---------- */
   const hamburger = document.querySelector('.hamburger');
   const navLinks = document.querySelector('.nav-links');
-  const dropdown = document.querySelector('.nav-dropdown');
-  const dropdownToggle = document.querySelector('.nav-dropdown-toggle');
+  const dropdowns = document.querySelectorAll('.nav-dropdown');
   const header = document.querySelector('.site-header');
 
   /* ---------- Mobile menu toggle ---------- */
@@ -30,25 +29,29 @@
         navLinks.classList.remove('open');
         document.body.style.overflow = '';
         document.body.classList.remove('mobile-menu-open');
-        if (dropdown) dropdown.classList.remove('open');
+        dropdowns.forEach(function (d) { d.classList.remove('open'); });
       });
     });
   }
 
-  /* ---------- Services dropdown ---------- */
-  if (dropdown && dropdownToggle) {
-    dropdownToggle.addEventListener('click', function (e) {
+  /* ---------- Nav dropdowns (generic: Services, Insights) ---------- */
+  dropdowns.forEach(function (dropdown) {
+    var toggle = dropdown.querySelector('.nav-dropdown-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', function (e) {
       e.preventDefault();
       dropdown.classList.toggle('open');
     });
+  });
 
-    /* Close dropdown when clicking outside */
-    document.addEventListener('click', function (e) {
+  /* Close dropdowns when clicking outside */
+  document.addEventListener('click', function (e) {
+    dropdowns.forEach(function (dropdown) {
       if (!dropdown.contains(e.target)) {
         dropdown.classList.remove('open');
       }
     });
-  }
+  });
 
   /* ---------- Close mobile menu on resize to desktop ---------- */
   window.addEventListener('resize', function () {
@@ -57,7 +60,7 @@
       navLinks.classList.remove('open');
       document.body.style.overflow = '';
       document.body.classList.remove('mobile-menu-open');
-      if (dropdown) dropdown.classList.remove('open');
+      dropdowns.forEach(function (d) { d.classList.remove('open'); });
     }
   });
 

@@ -20,6 +20,26 @@
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Insights",
+    "description": "Frameworks, papers, and practical ideas on measurable growth, pipeline performance, and revenue system design.",
+    "url": "https://wearecollective.com.au/insights.html",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Collective",
+      "url": "https://wearecollective.com.au/"
+    },
+    "hasPart": [
+      { "@type": "WebPage", "name": "Collective Revenue OS", "url": "https://wearecollective.com.au/frameworks/smmo" },
+      { "@type": "WebPage", "name": "The Channel Health Framework", "url": "https://wearecollective.com.au/frameworks/troubleshooting-hierarchy" },
+      { "@type": "WebPage", "name": "The Collective System", "url": "https://wearecollective.com.au/frameworks/revenue-architecture" },
+      { "@type": "WebPage", "name": "Pipeline Velocity and Better Revenue Decisions", "url": "https://wearecollective.com.au/field-notes/cac-ratio" }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -44,7 +64,16 @@
           </li>
           <li><a href="collective-os.html">Collective OS</a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="insights.html" class="active">Insights</a></li>
+          <li class="nav-dropdown nav-dropdown--active">
+            <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+              Insights
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+            </button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="insights.html#frameworks">Frameworks</a></li>
+              <li><a href="insights.html#field-notes">Field notes</a></li>
+            </ul>
+          </li>
           <li><a href="contact.html">Contact</a></li>
           <li class="nav-cta"><a href="https://cal.com/david.collins/collective-strategy-founder-call" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Book a Strategy Call</a></li>
         </ul>
@@ -121,28 +150,36 @@
           <p class="mt-sm">We have over 100 white papers in our vault that we will be releasing in due course. In the meantime, if there is something specific you want to learn more about, reach out and we will point you in the right direction.</p>
         </div>
 
-        <div class="article-card">
-          <p class="eyebrow">Revenue Systems</p>
-          <h3>Collective Revenue OS</h3>
-          <p>The method behind the system. How Collective treats marketing and sales as one measurable continuum using a simple loop: Measure. Diagnose. Optimise.</p>
+        <div class="article-group" id="frameworks">
+          <p class="eyebrow article-group-label">Frameworks</p>
+
+          <a class="article-card" href="/frameworks/smmo">
+            <p class="eyebrow">Revenue Systems</p>
+            <h3>Collective Revenue OS</h3>
+            <p>The method behind the system. How Collective treats marketing and sales as one measurable continuum using a simple loop: Measure. Diagnose. Optimise.</p>
+          </a>
+
+          <a class="article-card" href="/frameworks/troubleshooting-hierarchy">
+            <p class="eyebrow">Channel Health</p>
+            <h3>The Channel Health Framework</h3>
+            <p>Why most channel reporting creates misdiagnosis, and how to measure whether a channel is doing the job it exists to do.</p>
+          </a>
+
+          <a class="article-card" href="/frameworks/revenue-architecture">
+            <p class="eyebrow">Revenue Systems</p>
+            <h3>The Collective System</h3>
+            <p>An overview of the four connected layers that make up the Collective revenue operating system: Pitcher, Catcher, Closer, and Collective OS.</p>
+          </a>
         </div>
 
-        <div class="article-card">
-          <p class="eyebrow">Channel Health</p>
-          <h3>The Channel Health Framework</h3>
-          <p>Why most channel reporting creates misdiagnosis, and how to measure whether a channel is doing the job it exists to do.</p>
-        </div>
+        <div class="article-group" id="field-notes">
+          <p class="eyebrow article-group-label">Field notes</p>
 
-        <div class="article-card">
-          <p class="eyebrow">Pipeline Velocity</p>
-          <h3>Pipeline Velocity and Better Revenue Decisions</h3>
-          <p>How to improve the speed and quality of pipeline by measuring the right signals at the right layer of the revenue system.</p>
-        </div>
-
-        <div class="article-card">
-          <p class="eyebrow">Revenue Systems</p>
-          <h3>The Collective System</h3>
-          <p>An overview of the four connected layers that make up the Collective revenue operating system: Pitcher, Catcher, Closer, and Collective OS.</p>
+          <a class="article-card" href="/field-notes/cac-ratio">
+            <p class="eyebrow">Pipeline Velocity</p>
+            <h3>Pipeline Velocity and Better Revenue Decisions</h3>
+            <p>How to improve the speed and quality of pipeline by measuring the right signals at the right layer of the revenue system.</p>
+          </a>
         </div>
 
       </div>
