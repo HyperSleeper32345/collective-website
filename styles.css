@@ -33,6 +33,9 @@
   /* --- Brand dark-surface token --- */
   --color-surface-deep: #16161F;
 
+  /* --- Status: alert, for form errors (brand tokens alert-on-light and alert) --- */
+  --color-alert: #DC2626;
+
   /* --- Placeholder block colours --- */
   --color-placeholder: #E5E7EB;
   --color-placeholder-dark: var(--color-surface-deep);
@@ -72,6 +75,7 @@
     --color-border: rgba(255, 255, 255, 0.08);
     --color-placeholder: var(--color-surface-deep);
     --color-placeholder-dark: #16161F;
+    --color-alert: #F87171;
   }
 }
 
@@ -1202,6 +1206,118 @@ a.article-card:hover h3 {
   aspect-ratio: 3 / 4;
   width: 100%;
   max-width: 300px;
+}
+
+/* ==========================================================================
+   21. ENQUIRY FORM
+   ========================================================================== */
+.enquiry {
+  container-type: inline-size;
+}
+
+.enquiry-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@container (min-width: 820px) {
+  .enquiry-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.enquiry-intro h4 {
+  font-size: 18px;
+  margin-bottom: var(--space-xs);
+}
+
+.enquiry-form {
+  display: grid;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.form-field {
+  display: grid;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-heading);
+}
+
+.form-optional {
+  font-weight: 400;
+  color: var(--color-text-body);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-text-body);
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-heading);
+  font-size: 16px;
+  line-height: 1.5;
+  transition: border-color var(--transition-base);
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field input:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+
+.form-field [aria-invalid="true"] {
+  border-color: var(--color-alert);
+}
+
+.form-error {
+  font-size: 14px;
+  color: var(--color-alert);
+}
+
+.form-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.enquiry-form .btn {
+  justify-self: start;
+}
+
+.enquiry-form .btn[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}
+
+.form-status {
+  font-size: 15px;
+  color: var(--color-text-heading);
+}
+
+.form-status:empty {
+  display: none;
+}
+
+.form-status[data-state="error"] {
+  color: var(--color-alert);
 }
 
 /* ==========================================================================

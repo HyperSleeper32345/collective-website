@@ -56,7 +56,7 @@
             </ul>
           </li>
           <li><a href="contact.html" class="active">Contact</a></li>
-          <li class="nav-cta"><a href="https://cal.com/david.collins/collective-strategy-founder-call" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Book a Strategy Call</a></li>
+          <li class="nav-cta"><a href="/contact#enquiry" class="btn btn--primary">Book a Strategy Call</a></li>
         </ul>
       </nav>
       <button class="hamburger" aria-label="Toggle menu">
@@ -76,7 +76,8 @@
         <h1>Let's make revenue measurable.</h1>
         <p class="subheadline">If you want better visibility, stronger pipeline performance, and a clearer revenue system, start the conversation here.</p>
         <div class="btn-group">
-          <a href="https://cal.com/david.collins/collective-strategy-founder-call" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Book a Strategy Call</a>
+          <a href="/contact#enquiry" class="btn btn--primary">Book a Strategy Call</a>
+          <a href="/contact#enquiry" class="btn btn--secondary">Send an Enquiry</a>
         </div>
       </div>
     </section>
@@ -108,15 +109,47 @@
     </section>
 
     <!-- ========== CONTACT PATHS ========== -->
-    <section class="section">
+    <section class="section" id="enquiry">
       <div class="container">
-        <div class="section-intro">
-          <h2>Start with a conversation.</h2>
-        </div>
-        <div class="card">
-          <h4>Strategy Call</h4>
-          <p>A 30-minute conversation to understand your business, current growth model, and where a measurable revenue system could make a difference. No pitch. No proposal. Just clarity on whether Collective is the right fit.</p>
-          <a href="https://cal.com/david.collins/collective-strategy-founder-call" target="_blank" rel="noopener noreferrer" class="btn btn--primary mt-md">Book a Strategy Call</a>
+        <div class="enquiry">
+         <div class="enquiry-grid">
+          <div class="enquiry-intro">
+            <h2>Start with a conversation.</h2>
+            <h4 class="mt-md">Strategy Call</h4>
+            <p>A 30-minute conversation to understand your business, current growth model, and where a measurable revenue system could make a difference. No pitch. No proposal. Just clarity on whether Collective is the right fit.</p>
+            <h4 class="mt-md">Direct Enquiry</h4>
+            <p>Send the details below and David will reply by email to arrange a time.</p>
+          </div>
+
+          <form class="enquiry-form" action="/api/lead" method="post" novalidate data-enquiry-form>
+            <div class="form-field">
+              <label for="enquiry-name">Name</label>
+              <input id="enquiry-name" name="name" type="text" autocomplete="name" maxlength="120" required>
+              <p class="form-error" id="enquiry-name-error" hidden></p>
+            </div>
+            <div class="form-field">
+              <label for="enquiry-email">Email</label>
+              <input id="enquiry-email" name="email" type="email" autocomplete="email" maxlength="200" required>
+              <p class="form-error" id="enquiry-email-error" hidden></p>
+            </div>
+            <div class="form-field">
+              <label for="enquiry-phone">Phone <span class="form-optional">(optional)</span></label>
+              <input id="enquiry-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+              <p class="form-error" id="enquiry-phone-error" hidden></p>
+            </div>
+            <div class="form-field">
+              <label for="enquiry-message">Message</label>
+              <textarea id="enquiry-message" name="message" rows="6" maxlength="4000" required></textarea>
+              <p class="form-error" id="enquiry-message-error" hidden></p>
+            </div>
+            <div class="form-trap" aria-hidden="true">
+              <label for="enquiry-company-website">Company website</label>
+              <input id="enquiry-company-website" name="company_website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn--primary">Send an Enquiry</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+         </div>
         </div>
       </div>
     </section>
@@ -158,7 +191,7 @@
       <div class="footer-bottom">
         <p>&copy; 2026 Collective</p>
         <p><a href="mailto:david@wearecollective.com.au">david@wearecollective.com.au</a></p>
-        <a href="https://cal.com/david.collins/collective-strategy-founder-call" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Book a Strategy Call</a>
+        <a href="/contact#enquiry" class="btn btn--primary">Book a Strategy Call</a>
       </div>
     </div>
   </footer>
