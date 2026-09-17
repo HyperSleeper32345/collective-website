@@ -75,10 +75,11 @@
     });
   });
 
-  /* ---------- Attribution: first touch in this visit ----------
-     The UTMs, click ids, referrer and entry page of the visit are kept in
-     sessionStorage on the first page seen, so an enquiry sent three pages
-     later still carries where the visitor came from. */
+  /* ---------- Attribution for this visit ----------
+     The entry page and the first external referrer of the visit are kept in
+     sessionStorage, and so are the UTMs and click ids of the most recent
+     tagged landing, so an enquiry sent three pages later still carries where
+     the visitor came from. */
   var TRACKING_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
   var ATTR_KEY = 'collective_attribution';
 

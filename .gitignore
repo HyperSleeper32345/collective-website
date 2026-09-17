@@ -18,3 +18,6 @@ dist/
 # Claude Code mission worktrees
 .claude/worktrees/
 .gstack/
+
+# Wrangler local cache (account details, never commit)
+.wrangler/
