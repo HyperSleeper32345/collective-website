@@ -30,9 +30,12 @@
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-dark: rgba(255, 255, 255, 0.1);
 
+  /* --- Brand dark-surface token --- */
+  --color-surface-deep: #16161F;
+
   /* --- Placeholder block colours --- */
   --color-placeholder: #E5E7EB;
-  --color-placeholder-dark: #1A1A24;
+  --color-placeholder-dark: var(--color-surface-deep);
 
   /* --- Fluid typography --- */
   --text-hero: clamp(36px, 5vw, 64px);
@@ -67,7 +70,7 @@
     --color-text-heading: #FFFFFF;
     --color-text-body: #9CA3AF;
     --color-border: rgba(255, 255, 255, 0.08);
-    --color-placeholder: #1E1E2A;
+    --color-placeholder: var(--color-surface-deep);
     --color-placeholder-dark: #16161F;
   }
 }
