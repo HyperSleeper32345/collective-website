@@ -17,3 +17,4 @@ dist/
 
 # Claude Code mission worktrees
 .claude/worktrees/
+.gstack/
