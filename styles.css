@@ -1215,6 +1215,10 @@ a.article-card:hover h3 {
   container-type: inline-size;
 }
 
+section[id] {
+  scroll-margin-top: var(--nav-height);
+}
+
 .enquiry-grid {
   display: grid;
   gap: var(--space-lg);
