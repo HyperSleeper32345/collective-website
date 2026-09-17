@@ -1,0 +1,12 @@
+name: No retired butterfly
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/check-no-retired-butterfly.sh
