@@ -13,3 +13,4 @@
 # Build artifacts (none expected for this static site, but defensive)
 node_modules/
 dist/
+.gstack/
