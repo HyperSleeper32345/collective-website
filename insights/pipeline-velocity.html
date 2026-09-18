@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeline Velocity Formula and Limits | Collective</title>
+  <meta name="description" content="Calculate pipeline velocity, interpret its four inputs and understand why modelled revenue pace is different from profit or cash flow.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Collective">
+  <meta property="og:title" content="Pipeline Velocity Formula and Limits | Collective">
+  <meta property="og:description" content="Calculate pipeline velocity, interpret its four inputs and understand why modelled revenue pace is different from profit or cash flow.">
+  <meta property="og:url" content="https://wearecollective.com.au/insights/pipeline-velocity">
+  <meta property="og:image" content="https://wearecollective.com.au/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Collective dragonfly mark and wordmark on white">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pipeline Velocity Formula and Limits | Collective">
+  <meta name="twitter:description" content="Calculate pipeline velocity, interpret its four inputs and understand why modelled revenue pace is different from profit or cash flow.">
+  <meta name="twitter:image" content="https://wearecollective.com.au/og-image.png">
+  <link rel="canonical" href="https://wearecollective.com.au/insights/pipeline-velocity">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <script src="/analytics.js"></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Pipeline velocity: what it measures and what it misses",
+  "description": "Calculate pipeline velocity, interpret its four inputs and understand why modelled revenue pace is different from profit or cash flow.",
+  "url": "https://wearecollective.com.au/insights/pipeline-velocity",
+  "mainEntityOfPage": "https://wearecollective.com.au/insights/pipeline-velocity",
+  "image": "https://wearecollective.com.au/og-image.png",
+  "author": {
+    "@type": "Person",
+    "name": "David Collins"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Collective",
+    "url": "https://wearecollective.com.au/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wearecollective.com.au/icon-512.png"
+    }
+  },
+  "isPartOf": {
+    "@type": "CollectionPage",
+    "name": "Insights",
+    "url": "https://wearecollective.com.au/insights"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://wearecollective.com.au/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Insights",
+      "item": "https://wearecollective.com.au/insights"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Pipeline velocity: what it measures and what it misses",
+      "item": "https://wearecollective.com.au/insights/pipeline-velocity"
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="site-logo">Collective</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/system">System</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+              Services
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+            </button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="/pitcher">Pitcher</a></li>
+              <li><a href="/catcher">Catcher</a></li>
+              <li><a href="/closer">Closer</a></li>
+            </ul>
+          </li>
+          <li><a href="/collective-os">Collective OS</a></li>
+          <li><a href="/about">About</a></li>
+          <li class="nav-dropdown nav-dropdown--active">
+            <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+              Insights
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+            </button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="/insights#frameworks">Frameworks</a></li>
+              <li><a href="/insights#field-notes">Field notes</a></li>
+            </ul>
+          </li>
+          <li><a href="/contact">Contact</a></li>
+          <li class="nav-cta"><a href="/contact#enquiry" class="btn btn--primary">Book a Strategy Call</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== ARTICLE HERO ========== -->
+    <section class="hero hero--interior hero--article">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/insights">Insights</a> <span aria-hidden="true">/</span> <a href="/insights#field-notes">Field notes</a>
+        </nav>
+        <p class="eyebrow">Pipeline Velocity</p>
+        <h1>Pipeline velocity: what it measures and what it misses</h1>
+        <p class="article-byline">By David Collins</p>
+      </div>
+    </section>
+
+    <!-- ========== ARTICLE BODY ========== -->
+    <section class="section">
+      <div class="container container--narrow">
+        <article class="article-body">
+          <p>Pipeline velocity combines the number of opportunities, average deal value, win rate and sales-cycle length into an indicator of revenue pace.</p>
+          <p>It can help you compare scenarios and investigate constraints. Its usefulness depends on the definitions and records behind the calculation.</p>
+          <p>At Collective, we read it alongside acquisition cost, margin and the actual movement of opportunities. The calculation supports a decision; it does not replace a revenue forecast or cash-flow schedule.</p>
+          <h2>The formula</h2>
+          <p><strong>Pipeline velocity = opportunities &times; average deal value &times; opportunity win rate ÷ average sales-cycle days.</strong></p>
+          <p>This is a widely used sales-velocity formula, also described by Salesforce. The four inputs connect volume, value, conversion and time. <a href="https://www.salesforce.com/blog/sales/sales-velocity/" rel="noopener">Salesforce</a></p>
+          <p>Using days for the cycle length produces a result expressed as value per day. Enter a percentage as a decimal when calculating: 25% becomes 0.25.</p>
+          <p>Before running the numbers, define the sales process the calculation represents. Avoid combining a short-cycle service with a long-cycle project if their buying processes and values differ materially.</p>
+          <h2>Define an opportunity</h2>
+          <p>An opportunity should represent a prospect that has reached an agreed stage in the sales process. A raw enquiry does not automatically meet that definition.</p>
+          <p>Specify the requirements for entering the stage and make sure the team applies them consistently. Record when an opportunity closes or is no longer active.</p>
+          <p>The opportunity count is a stock of work in the pipeline at a point in time or an average across a defined period. The win rate and cycle length generally come from historical outcomes. Document how you select those inputs and why they are relevant to the current pipeline.</p>
+          <p>If the current mix differs from the history, calculate separate segments or show a range of assumptions. A single blended figure can conceal important differences.</p>
+          <h2>Define value, win rate and time</h2>
+          <p>Use average deal value on a consistent revenue basis. Do not mix total contract value, recurring monthly revenue and gross profit in one field.</p>
+          <p>Calculate opportunity win rate from a defined cohort or set of resolved opportunities, and state the approach. Open opportunities may still change the result if you are assessing a cohort that has not completed its cycle.</p>
+          <p>For cycle length, define the start and end events. The period from qualification to signed contract differs from enquiry to payment. Keep the boundary consistent when comparing periods.</p>
+          <p>Record whether the cycle statistic covers won deals only or all resolved opportunities. Check long-running open deals separately: they can be missed by a report built only from completed sales.</p>
+          <h2>Work through an illustrative example</h2>
+          <p>Suppose the model uses 50 active opportunities, an average deal value of $50,000, a 25% win rate and a 90-day cycle.</p>
+          <div class="article-table"><table>
+          <thead><tr><th scope="col">Input</th><th scope="col" class="num">Value</th></tr></thead>
+          <tbody>
+          <tr><td>Opportunities</td><td class="num">50</td></tr>
+          <tr><td>Average deal value</td><td class="num">$50,000</td></tr>
+          <tr><td>Opportunity win rate</td><td class="num">25%</td></tr>
+          <tr><td>Average sales cycle</td><td class="num">90 days</td></tr>
+          </tbody></table></div>
+          <p>The calculation is 50 &times; $50,000 &times; 0.25 ÷ 90, giving <strong>$6,944.44 per day</strong>.</p>
+          <p>This is an illustrative planning indicator. It does not mean $6,944.44 will arrive in the bank each day or that the business has booked that amount of revenue.</p>
+          <p>Multiplying the figure across a year introduces assumptions about replenishment, deal mix, capacity and the stability of the inputs. If you show that scenario, state those assumptions rather than presenting it as a settled annual yield.</p>
+          <h2>Change one input first</h2>
+          <p>Keep the other inputs fixed and increase the win rate from 25% to 27.5%. That is a 10% relative increase, or 2.5 percentage points. The modelled velocity rises by 10%.</p>
+          <p>Now consider reducing the cycle from 90 to 81 days while holding the other original inputs fixed. That is a 10% reduction in time, but the velocity increases by approximately 11.1%, because time is the divisor.</p>
+          <p>This is an inverse relationship. The same percentage movement in a numerator and denominator does not create the same percentage change in the result.</p>
+          <p>Use that distinction when reviewing targets. A faster cycle needs an operational explanation, such as removing a documented delay, rather than simply entering a smaller number in a calculator.</p>
+          <h2>Understand the combined sensitivity</h2>
+          <p>If opportunities, deal value and win rate each rise by 10%, while cycle length falls by 10%, the multiplier is:</p>
+          <p><strong>1.1 &times; 1.1 &times; 1.1 ÷ 0.9 = 1.4789.</strong></p>
+          <p>That represents approximately <strong>47.9% higher modelled velocity</strong>. Applied to the illustrative baseline, the result is about $10,270.06 per day.</p>
+          <p>The calculation shows sensitivity, not the probability of achieving the changes. The inputs may influence one another. Increasing deal value could change win rate or cycle length. Increasing opportunity volume could place pressure on sales capacity.</p>
+          <p>When modelling opportunities, fractional counts can appear in percentage scenarios. Actual pipeline records are whole opportunities; make that distinction if turning the sensitivity into a practical target.</p>
+          <h2>Check what the formula leaves out</h2>
+          <p>Velocity does not include delivery cost, margin, payment terms or the timing of cash receipts. Faster sales at a lower margin may produce a different commercial result from the one the headline suggests.</p>
+          <p>It also does not show the distribution of deal sizes or cycle lengths. A few large opportunities can affect an average. Review the underlying records and segment the pipeline where useful.</p>
+          <p>For property, a signed contract and settlement are different events. For a construction business, winning the work and having capacity to deliver it are different decisions. Keep those realities in the wider commercial review.</p>
+          <h2>Use the model to choose a question</h2>
+          <p>If the cycle is lengthening, inspect the stage where opportunities are waiting. If win rate is changing, compare qualification criteria, deal mix and recorded outcomes. If value is rising, check whether margin and delivery requirements are changing too.</p>
+          <p>Connect the number to a practical investigation. Record the explanation, the action and the point at which the team will review the result.</p>
+          <p>Collective helps businesses make their marketing and sales performance more visible and useful. If your pipeline report raises questions it cannot answer, <a href="/contact#enquiry">discuss the measurement with us</a>.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== READ NEXT ========== -->
+    <section class="section section--alt">
+      <div class="container container--narrow">
+        <div class="section-intro">
+          <h2>Read next.</h2>
+        </div>
+        <div class="article-group">
+          <a class="article-card" href="/insights/diagnose-marketing-performance">
+            <p class="eyebrow">Field note</p>
+            <h3>How to diagnose marketing performance before changing strategy</h3>
+          </a>
+          <a class="article-card" href="/collective-os">
+            <p class="eyebrow">Collective OS</p>
+            <h3>The operating layer that connects CRM, source tracking and dashboards so the inputs to this calculation can be trusted.</h3>
+          </a>
+          <a class="article-card" href="/insights">
+            <p class="eyebrow">Insights</p>
+            <h3>All frameworks and field notes.</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FINAL CTA ========== -->
+    <section class="cta-block">
+      <div class="container">
+        <h2>Want to talk about your revenue system?</h2>
+        <p>Collective works with a limited number of clients at a time to ensure the system is implemented properly.</p>
+        <div class="btn-group">
+          <a href="/contact#enquiry" class="btn btn--primary">Book a Strategy Call</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p class="site-logo">Collective</p>
+          <p class="tagline">Make revenue measurable.</p>
+          <p class="support-line">A revenue operating system for high-value growth.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/">Home</a>
+          <a href="/system">System</a>
+          <a href="/services">Services</a>
+          <a href="/collective-os">Collective OS</a>
+          <a href="/about">About</a>
+          <a href="/insights">Insights</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Collective</p>
+        <p><a href="mailto:david@wearecollective.com.au">david@wearecollective.com.au</a></p>
+        <a href="/contact#enquiry" class="btn btn--primary">Book a Strategy Call</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/main.js"></script>
+</body>
+</html>
