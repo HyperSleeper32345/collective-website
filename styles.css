@@ -1,5 +1,5 @@
 /* ==========================================================================
-   COLLECTIVE — styles.css
+   COLLECTIVE: styles.css
    Complete design system: colours, typography, layout, dark mode,
    container queries, responsive utilities.
    ========================================================================== */
@@ -30,9 +30,15 @@
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-dark: rgba(255, 255, 255, 0.1);
 
+  /* --- Brand dark-surface token --- */
+  --color-surface-deep: #16161F;
+
+  /* --- Status: alert, for form errors (brand tokens alert-on-light and alert) --- */
+  --color-alert: #DC2626;
+
   /* --- Placeholder block colours --- */
   --color-placeholder: #E5E7EB;
-  --color-placeholder-dark: #1A1A24;
+  --color-placeholder-dark: var(--color-surface-deep);
 
   /* --- Fluid typography --- */
   --text-hero: clamp(36px, 5vw, 64px);
@@ -67,8 +73,9 @@
     --color-text-heading: #FFFFFF;
     --color-text-body: #9CA3AF;
     --color-border: rgba(255, 255, 255, 0.08);
-    --color-placeholder: #1E1E2A;
+    --color-placeholder: var(--color-surface-deep);
     --color-placeholder-dark: #16161F;
+    --color-alert: #F87171;
   }
 }
 
@@ -943,7 +950,7 @@ p {
 }
 
 .article-card .eyebrow {
-  color: var(--color-accent);
+  color: var(--color-text-heading);
   margin-bottom: var(--space-xs);
 }
 
@@ -965,6 +972,163 @@ p {
 
 .article-card a:hover {
   color: var(--color-accent-hover);
+}
+
+/* Article groups and linked cards (Insights hub) */
+.article-group + .article-group {
+  margin-top: var(--space-xl);
+}
+
+.article-group-label {
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-md);
+}
+
+.article-group .article-card:last-child {
+  border-bottom: none;
+}
+
+a.article-card {
+  display: block;
+}
+
+a.article-card h3 {
+  transition: color var(--transition-base);
+}
+
+a.article-card:hover h3 {
+  color: var(--color-accent);
+}
+
+.section--divided {
+  border-top: 1px solid var(--color-border);
+}
+
+/* Pending cards and the article pages (Insights spokes) */
+.article-card--pending h3 {
+  color: var(--color-text-body);
+}
+
+.text-link {
+  font-weight: 500;
+  color: var(--color-text-heading);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.text-link:hover {
+  text-decoration-color: currentColor;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: var(--space-md);
+  color: var(--color-text-muted);
+}
+
+.breadcrumb a {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-block;
+  padding-block: 12px;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-text-light);
+}
+
+.article-byline {
+  margin-top: var(--space-md);
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+.hero--article h1 {
+  font-size: var(--text-page-title);
+  max-width: 22ch;
+}
+
+.article-body {
+  container-type: inline-size;
+  min-width: 0;
+}
+
+.article-body > * + * {
+  margin-top: var(--space-sm);
+}
+
+.article-body h2 {
+  font-size: var(--text-section);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xs);
+}
+
+.article-body p {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.article-body strong {
+  color: var(--color-text-heading);
+  font-weight: 500;
+}
+
+.article-body a {
+  color: var(--color-text-heading);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.article-body a:hover {
+  text-decoration-color: currentColor;
+}
+
+.article-table {
+  overflow-x: auto;
+  margin-block: var(--space-md);
+}
+
+.article-table table {
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.article-table th,
+.article-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.article-table th {
+  font-weight: 500;
+  color: var(--color-text-heading);
+}
+
+.article-table .num {
+  text-align: right;
+  padding-right: 0;
+}
+
+@container (max-width: 480px) {
+  .article-table table { font-size: 14px; }
+}
+
+/* Active nav dropdown cue */
+.nav-dropdown--active .nav-dropdown-toggle {
+  color: var(--color-text-light);
 }
 
 /* ==========================================================================
@@ -1168,6 +1332,122 @@ p {
   aspect-ratio: 3 / 4;
   width: 100%;
   max-width: 300px;
+}
+
+/* ==========================================================================
+   21. ENQUIRY FORM
+   ========================================================================== */
+.enquiry {
+  container-type: inline-size;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-height);
+}
+
+.enquiry-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@container (min-width: 820px) {
+  .enquiry-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.enquiry-intro h4 {
+  font-size: 18px;
+  margin-bottom: var(--space-xs);
+}
+
+.enquiry-form {
+  display: grid;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.form-field {
+  display: grid;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-heading);
+}
+
+.form-optional {
+  font-weight: 400;
+  color: var(--color-text-body);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-text-body);
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-heading);
+  font-size: 16px;
+  line-height: 1.5;
+  transition: border-color var(--transition-base);
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field input:focus-visible,
+.form-field textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+
+.form-field [aria-invalid="true"] {
+  border-color: var(--color-alert);
+}
+
+.form-error {
+  font-size: 14px;
+  color: var(--color-alert);
+}
+
+.form-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.enquiry-form .btn {
+  justify-self: start;
+}
+
+.enquiry-form .btn[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}
+
+.form-status {
+  font-size: 15px;
+  color: var(--color-text-heading);
+}
+
+.form-status:empty {
+  display: none;
+}
+
+.form-status[data-state="error"] {
+  color: var(--color-alert);
 }
 
 /* ==========================================================================

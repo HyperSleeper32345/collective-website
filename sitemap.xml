@@ -40,4 +40,12 @@
     <loc>https://wearecollective.com.au/contact</loc>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://wearecollective.com.au/insights/diagnose-marketing-performance</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wearecollective.com.au/insights/pipeline-velocity</loc>
+    <priority>0.6</priority>
+  </url>
 </urlset>

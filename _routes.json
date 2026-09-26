@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/api/*", "/CLAUDE.md", "/README.md", "/.gitignore", "/.wrangler/*", "/_routes.json"],
+  "exclude": []
+}
