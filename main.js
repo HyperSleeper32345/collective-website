@@ -189,8 +189,13 @@
           form.reset();
           status.textContent = 'Thank you. Your enquiry has been received and David will reply by email.';
           status.setAttribute('data-state', 'success');
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({ event: 'form_submit', form: 'contact-enquiry' });
+          // Fire the GA4 conversion event through the analytics helper, which
+          // calls gtag directly. A bare dataLayer push is a GTM pattern and
+          // this site loads gtag.js with no GTM container, so the push alone
+          // never reached GA4.
+          if (window.collective && typeof window.collective.track === 'function') {
+            window.collective.track('form_submit', { form: 'contact-enquiry', page_path: window.location.pathname });
+          }
           return;
         }
         if (result.status === 422 && result.data.errors) { show(result.data.errors); return; }
