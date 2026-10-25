@@ -195,6 +195,22 @@ p {
   background-color: var(--color-bg-secondary);
 }
 
+/* Brand rule 07.24: an inset surface takes ink for its type, never body grey (4.44 : 1 on #F5F5F7) */
+.section--alt,
+.card,
+.layer-card {
+  --color-text-body: var(--color-text-heading);
+  color: var(--color-text-body);
+}
+
+@media (prefers-color-scheme: dark) {
+  .section--alt,
+  .card,
+  .layer-card {
+    --color-text-body: #9CA3AF;
+  }
+}
+
 /* Container query wrapper */
 .cq-container {
   container-type: inline-size;
@@ -585,7 +601,7 @@ p {
 
 .hero .support-line {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-text-muted);
   margin-top: var(--space-md);
 }
 
@@ -1161,7 +1177,7 @@ a.article-card:hover h3 {
 
 .footer-brand .support-line {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-text-muted);
 }
 
 .footer-nav {
@@ -1193,7 +1209,7 @@ a.article-card:hover h3 {
 
 .footer-bottom p {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--color-text-muted);
 }
 
 .footer-bottom a {
@@ -1262,8 +1278,15 @@ a.article-card:hover h3 {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--color-accent);
+  color: var(--color-text-heading);
   margin-bottom: 4px;
+}
+
+/* The accent carries no type on a light ground (2.26 : 1 on #F5F5F7); the bar carries it there */
+@media (prefers-color-scheme: dark) {
+  .metric-item h4 {
+    color: var(--color-accent);
+  }
 }
 
 .metric-item p {
