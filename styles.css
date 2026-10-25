@@ -195,6 +195,22 @@ p {
   background-color: var(--color-bg-secondary);
 }
 
+/* Brand rule 07.24: an inset surface takes ink for its type, never body grey (4.44 : 1 on #F5F5F7) */
+.section--alt,
+.card,
+.layer-card {
+  --color-text-body: var(--color-text-heading);
+  color: var(--color-text-body);
+}
+
+@media (prefers-color-scheme: dark) {
+  .section--alt,
+  .card,
+  .layer-card {
+    --color-text-body: #9CA3AF;
+  }
+}
+
 /* Container query wrapper */
 .cq-container {
   container-type: inline-size;
