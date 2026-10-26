@@ -25,6 +25,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://wearecollective.com.au/ecommerce</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://wearecollective.com.au/collective-os</loc>
     <priority>0.8</priority>
   </url>
