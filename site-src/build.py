@@ -33,6 +33,11 @@ SITE = 'https://wearecollective.com.au'
 EMAIL = 'david@wearecollective.com.au'
 # Preview deployments of this Pages project may send TEST leads (see enquiry.js).
 LEAD_TEST_HOST = 'collective-website-1lc.pages.dev'
+# Measurement (C-SITE-V5-2): one GTM container carries GA4 G-GTJXEGTF0G and the Meta pixel.
+# On the preview host the page loads the container's "Pages preview" environment, so a
+# version can be proven there before it is published to Live at cutover.
+GTM_CONTAINER = 'GTM-NT8V9Z6W'
+GTM_PREVIEW_ENVIRONMENT = {'auth':'al8LAMD2C2BQln6BaJOdEA','preview':'env-3'}
 NAV = [('approach', 'Approach'), ('capabilities', 'Capabilities'), ('work', 'Work'), ('insights', 'Thinking'), ('about', 'About')]
 ARROW = '<span aria-hidden="true">↗</span>'
 SITEMAP = []
@@ -166,8 +171,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--no-lead-test-host', action='store_true', help='Build without the preview TEST-lead host (enquiries send only from the production origin).')
     args=parser.parse_args()
-    config={'environment':'production','productionOrigin':SITE,'enquiryMode':'api','leadEndpoint':'/api/lead','leadTestHost':None if args.no_lead_test_host else LEAD_TEST_HOST,'measurementEnabled':False,'ga4MeasurementId':'G-GTJXEGTF0G'}
-    write('site-config.js', '/* Generated launch settings (site-src/build.py). No external tags are loaded here. */\nwindow.CollectiveSite = Object.freeze('+json.dumps(config,separators=(',',':'))+');\n')
+    config={'environment':'production','productionOrigin':SITE,'enquiryMode':'api','leadEndpoint':'/api/lead','leadTestHost':None if args.no_lead_test_host else LEAD_TEST_HOST,'measurementEnabled':True,'analyticsConsent':'granted','gtmContainerId':GTM_CONTAINER,'gtmTestEnvironment':None if args.no_lead_test_host else GTM_PREVIEW_ENVIRONMENT}
+    write('site-config.js', '/* Generated launch settings (site-src/build.py). measurement.js loads GTM from these. */\nwindow.CollectiveSite = Object.freeze('+json.dumps(config,separators=(',',':'))+');\n')
     pages=[json.loads(p.read_text()) for p in sorted((CONTENT/'pages').glob('*.json'))]
     articles=[json.loads(p.read_text()) for p in sorted((CONTENT/'articles').glob('*.json'))]
     priority=['independent-growth-business','diagnose-marketing-performance','pipeline-velocity','revenue-and-profit']

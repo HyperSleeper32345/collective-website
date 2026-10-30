@@ -21,5 +21,6 @@ The site at wearecollective.com.au. Cloudflare Pages project `collective-website
 - The only 301s are the six retired routes in `_redirects` (`/system`, `/services`, `/pitcher`, `/catcher`, `/closer`, `/collective-os`, each with its `/` and `.html` forms).
 - No privacy page until David says so.
 - Server side: `functions/api/lead.js` posts to Supabase `public.ingest_collective_lead`; `functions/_middleware.js` and `_routes.json` keep `site-src/`, `scripts/` and repository files off the web. Environment values live on the Pages project, never in the repository.
+- Measurement: `measurement.js` loads GTM `GTM-NT8V9Z6W` (GA4 `G-GTJXEGTF0G` and Meta pixel 2497354107460054 live inside the container, not in the repo) at the production origin, and the container's "Pages preview" environment on the preview host. Consent defaults: analytics granted, advertising denied, ads data redacted. A container change is proven on the preview environment, then published to Live; production loads Live only.
 - Test leads have first name TEST. On this project's preview host (`*.collective-website-1lc.pages.dev`) the form sends only TEST leads; any other name prepares the email draft.
 - No em or en dashes anywhere; title separators are a vertical bar. Australian English.

@@ -27,22 +27,41 @@ await assert.rejects(submitLead(payload,{fetcher:async()=>{throw new TypeError('
 await assert.rejects(submitLead({...payload,message:'x'.repeat(4001)}),/shorten/);
 
 const code=await readFile(new URL('../measurement.js',import.meta.url),'utf8');
-function measurement({environment='production',origin='https://wearecollective.com.au',enabled=true}={}) {
-  const window={CollectiveSite:{environment,productionOrigin:'https://wearecollective.com.au',measurementEnabled:enabled},location:{origin}};
-  vm.runInNewContext(code,{window,document:{addEventListener(){}}});
+function measurement({environment='production',origin='https://wearecollective.com.au',enabled=true,consent,testEnvironment,leadTestHost}={}) {
+  const url=new URL(origin);
+  const head=[];
+  const window={CollectiveSite:{environment,productionOrigin:'https://wearecollective.com.au',measurementEnabled:enabled,analyticsConsent:consent,gtmContainerId:'GTM-NT8V9Z6W',gtmTestEnvironment:testEnvironment,leadTestHost},location:{origin,hostname:url.hostname,protocol:url.protocol}};
+  vm.runInNewContext(code,{window,document:{addEventListener(){},createElement:()=>({}),head:{appendChild:tag=>head.push(tag)}}});
+  window.loaded=head.map(tag=>tag.src);
+  window.events=()=>(window.dataLayer||[]).filter(entry=>entry&&typeof entry.event==='string'&&!entry.event.startsWith('gtm.'));
   return window;
 }
 let m=measurement();
 m.CollectiveMeasurement.record('generate_lead',{form_id:'contact_enquiry'});
-assert.equal(m.dataLayer,undefined,'Consent is required before queuing analytics.');
+assert.equal(m.events().length,0,'Consent is required before queuing analytics.');
 m.CollectiveMeasurement.setAnalyticsConsent(true);
 m.CollectiveMeasurement.record('generate_lead',{form_id:'contact_enquiry',enquiry_type:'developer',email:'private@example.com',message:'Private message',link_url:'mailto:private@example.com?body=private',id:uuid});
-assert.equal(JSON.stringify(m.dataLayer),JSON.stringify([{event:'generate_lead',form_id:'contact_enquiry',enquiry_type:'developer'}]));
+assert.equal(JSON.stringify(m.events()),JSON.stringify([{event:'generate_lead',form_id:'contact_enquiry',enquiry_type:'developer'}]));
 m.CollectiveMeasurement.record('unknown_event',{form_id:'contact_enquiry'});
-assert.equal(m.dataLayer.length,1);
-for (const settings of [{environment:'review'},{origin:'https://collective-bracket-study.stratosphere-9776.chatgpt.site'},{enabled:false}]) {
-  m=measurement(settings);m.CollectiveMeasurement.setAnalyticsConsent(true);m.CollectiveMeasurement.record('generate_lead',{form_id:'contact_enquiry'});
-  assert.equal(m.dataLayer,undefined,'Preview and disabled measurement remain inert.');
+assert.equal(m.events().length,1);
+assert.equal(JSON.stringify(m.dataLayer).includes('private'),false,'No personal field or mailto URL reaches the data layer.');
+// GTM loads at the production origin with the Live container, after consent defaults:
+// analytics as chosen, every advertising signal denied, ads data redacted.
+m=measurement({consent:'granted',testEnvironment:{auth:'a',preview:'env-3'},leadTestHost:'collective-website-1lc.pages.dev'});
+assert.deepEqual(m.loaded,['https://www.googletagmanager.com/gtm.js?id=GTM-NT8V9Z6W']);
+assert.equal(m.dataLayer[0][0],'consent');assert.equal(m.dataLayer[0][1],'default');
+assert.deepEqual({...m.dataLayer[0][2]},{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
+assert.deepEqual([...m.dataLayer[1]],['set','ads_data_redaction',true]);
+assert.equal(m.dataLayer[2].event,'gtm.js');
+m.CollectiveMeasurement.record('enquiry_start',{form_id:'contact_enquiry',enquiry_type:'growth'});
+assert.equal(m.events().length,1,'Analytics consent granted by the site default queues events.');
+// The project's own preview host loads the preview environment; nothing else does.
+m=measurement({origin:'https://mission-23a0c200.collective-website-1lc.pages.dev',consent:'granted',testEnvironment:{auth:'a',preview:'env-3'},leadTestHost:'collective-website-1lc.pages.dev'});
+assert.deepEqual(m.loaded,['https://www.googletagmanager.com/gtm.js?id=GTM-NT8V9Z6W&gtm_auth=a&gtm_preview=env-3&gtm_cookies_win=x']);
+for (const settings of [{environment:'review'},{origin:'https://collective-bracket-study.stratosphere-9776.chatgpt.site'},{enabled:false},{origin:'https://mission-23a0c200.collective-website-1lc.pages.dev'},{origin:'https://collective-website-1lc.pages.dev.example.com',leadTestHost:'collective-website-1lc.pages.dev'}]) {
+  m=measurement({consent:'granted',...settings});m.CollectiveMeasurement.setAnalyticsConsent(true);m.CollectiveMeasurement.record('generate_lead',{form_id:'contact_enquiry'});
+  assert.equal(m.dataLayer,undefined,'Other hosts and disabled measurement remain inert.');
+  assert.equal(m.loaded.length,0,'No container loads off the production origin and preview host.');
 }
 // The Pages Function maps the v5 fields additively (C-SITE-V5): business to company,
 // website and the enquiry context into the payload ingest_lead keeps as raw_payload.
@@ -77,4 +96,4 @@ assert.deepEqual(await reply.json(), { ok: true });
 assert.equal(rpc, undefined, 'the honeypot writes nothing');
 globalThis.fetch = realFetch;
 
-console.log('Passed: receipt-based lead success, preserved payload, spam/missing-ID/server/network failures, message limit, consent/host guards, analytics field allowlist, and /api/lead field mapping (company, website, enquiry context, attribution, honeypot). No external requests.');
+console.log('Passed: receipt-based lead success, preserved payload, spam/missing-ID/server/network failures, message limit, consent/host guards, GTM loading (Live at the origin, the preview environment on the preview host, consent defaults first), analytics field allowlist, and /api/lead field mapping (company, website, enquiry context, attribution, honeypot). No external requests.');
