@@ -163,7 +163,10 @@
       status.textContent = 'Select and copy the enquiry above, then paste it into your email.';
     }
   });
+  // An unfinished enquiry survives the back-forward cache; only a prepared or received one is cleared
+  // (Codex review P2 on PR 20; v5's own handler cleared every state).
   window.addEventListener('pagehide', () => {
+    if (ready.hidden && received.hidden) return;
     form.reset(); draft.value = ''; open.href = 'mailto:david@wearecollective.com.au';
     ready.hidden = true; received.hidden = true; form.hidden = false; status.textContent = '';
     error.hidden = true; fallback.hidden = true; updateInterest();
