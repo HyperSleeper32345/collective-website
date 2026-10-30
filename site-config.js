@@ -1,0 +1,2 @@
+/* Generated launch settings (site-src/build.py). measurement.js loads GTM from these. */
+window.CollectiveSite = Object.freeze({"environment":"production","productionOrigin":"https://wearecollective.com.au","enquiryMode":"api","leadEndpoint":"/api/lead","leadTestHost":"collective-website-1lc.pages.dev","measurementEnabled":true,"analyticsConsent":"granted","gtmContainerId":"GTM-NT8V9Z6W","gtmTestEnvironment":{"auth":"al8LAMD2C2BQln6BaJOdEA","preview":"env-3"}});

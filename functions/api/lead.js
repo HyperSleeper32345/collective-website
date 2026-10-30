@@ -33,8 +33,16 @@ const LIMITS = {
   phone: 40,
   message: 4000,
   url: 500,
-  utmValue: 200
+  utmValue: 200,
+  company: 160,
+  context: 400
 };
+
+// The v5 contact form's structured fields. They travel under one "enquiry" key, so
+// ingest_lead keeps them in raw_payload and leaves product_interest_code alone.
+const ENQUIRY_KEYS = [
+  'interest', 'business_model', 'developer_business', 'developer_ambition', 'developer_pipeline'
+];
 
 const TRACKING_KEYS = [
   'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
@@ -200,6 +208,26 @@ export async function onRequestPost(context) {
     ip_country: clean((request.cf && request.cf.country) || '', 8)
   };
   if (phone) payload.phone = phone;
+
+  // v5 form: the business name is the lead's company; the visitor's own website and
+  // the enquiry context are recorded in raw_payload (ingest_lead stores the payload whole).
+  const company = clean(body.business, LIMITS.company);
+  if (company) payload.company = company;
+
+  const website = clean(body.website, LIMITS.url);
+  if (website) payload.website = website;
+
+  const given = body.enquiry && typeof body.enquiry === 'object' && !Array.isArray(body.enquiry)
+    ? body.enquiry : {};
+  const enquiry = {};
+  ENQUIRY_KEYS.forEach(function (k) {
+    const value = clean(given[k], LIMITS.context);
+    if (value) enquiry[k] = value;
+  });
+  if (typeof given.investment_acknowledged === 'boolean') {
+    enquiry.investment_acknowledged = given.investment_acknowledged;
+  }
+  if (Object.keys(enquiry).length) payload.enquiry = enquiry;
 
   const referrer = referrerUrl(request, body.referrer);
   if (referrer) payload.referrer_url = referrer;
