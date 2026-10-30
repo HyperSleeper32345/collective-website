@@ -1,0 +1,74 @@
+{
+  "font": "Archivo",
+  "weight": 750,
+  "units_per_em": 1000,
+  "tracking_em": -0.035,
+  "outline_source": "Bundled OFL-licensed Archivo Latin variable WOFF2",
+  "first_c_ink_bounds": [
+    37.85870361328125,
+    -12,
+    552.130126953125,
+    539.1412963867188
+  ],
+  "bracket_vertex_y_font_units": 263.5706481933594,
+  "wordmark_baseline_svg_y": 760.0,
+  "bracket_vertex_svg_y": 496.4293518066406,
+  "bracket_half_height_font_units": 275.5706481933594,
+  "bracket_arm_dx_dy": "10:11",
+  "bracket_stroke_font_units": 65.0,
+  "css_guidance": "Set transparent wordmark SVG height to 0.84em to retain the 1000-unit font scale. Use width:auto and preserve intrinsic aspect ratio. Square assets centre the visible compact mark independently.",
+  "assets": {
+    "collective-primary.svg": {
+      "width": 5466.6459406072445,
+      "height": 840.0,
+      "width_em": 5.466645940607244,
+      "height_em": 0.84
+    },
+    "collective-secondary.svg": {
+      "width": 4395.6083984375,
+      "height": 840.0,
+      "width_em": 4.3956083984375,
+      "height_em": 0.84
+    },
+    "collective-compact.svg": {
+      "width": 1385.308965509588,
+      "height": 840.0,
+      "width_em": 1.385308965509588,
+      "height_em": 0.84
+    },
+    "collective-primary-reverse.svg": {
+      "width": 5466.6459406072445,
+      "height": 840.0,
+      "width_em": 5.466645940607244,
+      "height_em": 0.84
+    },
+    "collective-secondary-reverse.svg": {
+      "width": 4395.6083984375,
+      "height": 840.0,
+      "width_em": 4.3956083984375,
+      "height_em": 0.84
+    },
+    "collective-compact-reverse.svg": {
+      "width": 1385.308965509588,
+      "height": 840.0,
+      "width_em": 1.385308965509588,
+      "height_em": 0.84
+    },
+    "collective-favicon.svg": {
+      "width": 64,
+      "height": 64,
+      "inset_fraction": 0.05,
+      "stroke_font_units": 90
+    },
+    "collective-social.svg": {
+      "width": 1024,
+      "height": 1024,
+      "inset_fraction": 0.14,
+      "stroke_font_units": 65.0
+    },
+    "collective-accent.svg": {
+      "width": 342.0,
+      "height": 264.0
+    }
+  }
+}

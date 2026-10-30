@@ -1,0 +1,21 @@
+/* The primary wordmark uses c-centred red brackets. Plain lettering is secondary. */
+.identity-lockup{display:inline-flex;align-items:center;justify-content:flex-start;font-family:var(--sans,Archivo,sans-serif);font-weight:750;line-height:1;white-space:nowrap;vertical-align:middle}
+.identity-artwork{display:block;width:auto;height:.84em;max-width:none;flex:none}
+.brand>.identity-lockup{font-size:38px;letter-spacing:0;font-weight:750}
+.identity-lockup--compact .identity-artwork{height:.84em}
+.application-brand .identity-lockup{font-size:33px}
+.question-display{grid-template-columns:1fr;padding-inline:0}
+.question-display h3{max-width:1060px}
+.study-bar{background:var(--ink);color:var(--white);font-size:11px;line-height:1.4}
+.study-bar-inner{display:flex;align-items:center;justify-content:space-between;gap:25px;padding-block:10px}
+.study-bar p{display:flex;align-items:center;gap:18px;white-space:nowrap}
+.study-bar strong{font-weight:400;color:#b4b5ae}
+.study-bar nav{display:flex;align-items:center;gap:25px}
+.study-bar a{display:flex;align-items:center;gap:9px;padding-block:2px;white-space:nowrap}
+.study-bar a:hover{text-decoration:underline;text-underline-offset:4px}
+.study-bar a:focus-visible{outline-color:var(--red)}
+@media(max-width:1150px){.brand>.identity-lockup{font-size:34px}.header-inner{gap:22px}.header-descriptor{margin-left:0}.application-brand .identity-lockup{font-size:29px}}
+@media(max-width:900px){.application-brand .identity-lockup{font-size:25px}}
+@media(max-width:620px){.brand>.identity-lockup{font-size:30px}.header-inner{gap:14px}.header-apply{gap:12px;padding-left:0}.study-bar-inner{gap:15px;padding-block:9px}.study-bar p{gap:0}.study-bar strong{display:none}.study-bar nav{gap:19px}.study-bar a{gap:5px}.study-bar{font-size:10px}.question-display{grid-template-columns:1fr}}
+@media(max-width:360px){.brand>.identity-lockup{font-size:26px}.header-apply{font-size:11px;gap:9px}.header-inner{gap:10px}.study-bar nav{gap:13px}.study-bar{font-size:9px}}
+@media print{.study-bar{display:none}}
