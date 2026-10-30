@@ -406,4 +406,6 @@
   .contact-booking-body { grid-template-columns:1fr; gap:24px; padding-top:28px; }
   .contact-booking-intro h2 {font-size:37px;}
   .contact-booking-intro p {font-size:17px; margin-top:19px; max-width:440px;}
+  /* With the privacy link removed, Back to top keeps v5's place in the right-hand column. */
+  .full-footer-bottom>a:last-child {grid-column:2;}
 }
