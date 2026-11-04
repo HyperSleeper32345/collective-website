@@ -33,3 +33,6 @@
 
 /* Keep the large display settings tight without closing word spaces. */
 .evidence-heading h2,.thinking-heading h2,.practice-heading>h2,.partnership-heading>h2,.questions-section h2,.closing-action>span{word-spacing:.06em}
+
+/* C-SITE-ARROW-1: the one line arrow (site-src/build.py arrow()). It takes the size of the text it sits in, and each direction is the north-east drawing rotated. */
+.arrow{display:inline-block;width:.9em;height:.9em;vertical-align:-.08em;flex-shrink:0;overflow:visible}.arrow--e{transform:rotate(45deg)}.arrow--se{transform:rotate(90deg)}.arrow--s{transform:rotate(135deg)}.arrow--sw{transform:rotate(180deg)}.arrow--w{transform:rotate(-135deg)}.arrow--nw{transform:rotate(-90deg)}.arrow--n{transform:rotate(-45deg)}

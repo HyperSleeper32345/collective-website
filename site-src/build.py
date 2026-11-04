@@ -40,6 +40,22 @@ GTM_CONTAINER = 'GTM-NT8V9Z6W'
 GTM_PREVIEW_ENVIRONMENT = {'auth':'al8LAMD2C2BQln6BaJOdEA','preview':'env-3'}
 NAV = [('approach', 'Approach'), ('capabilities', 'Capabilities'), ('work', 'Work'), ('insights', 'Thinking'), ('about', 'About')]
 ARROW = '<span aria-hidden="true">↗</span>'
+# C-SITE-ARROW-1: iOS and some Android fonts draw the arrow characters as emoji tiles, so
+# every arrow character in a page's text is emitted as one line arrow instead. The drawing
+# is the closing action's arrow (M10 90 90 10M22 10H90V78) on a 24 grid, at the same
+# stroke weight for its size; each direction is that one drawing rotated (styles.css .arrow).
+ARROW_PATH = 'M2.5 21.5 21.5 2.5M5.35 2.5H21.5V18.65'
+ARROW_DIRECTIONS = {'↗':'ne','→':'e','↘':'se','↓':'s','↙':'sw','←':'w','↖':'nw','↑':'n'}
+ARROW_CHARACTER = re.compile('['+''.join(ARROW_DIRECTIONS)+']')
+TAG_OR_TEXT = re.compile(r'(<script\b.*?</script>|<style\b.*?</style>|<title>.*?</title>|<[^>]*>)', re.S)
+
+def arrow(direction='ne'):
+    return f'<svg class="arrow arrow--{direction}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true" focusable="false"><path d="{ARROW_PATH}"/></svg>'
+
+def line_arrows(html):
+    # Text between tags only: attributes, titles, scripts and styles are left as they are.
+    return ''.join(part if i % 2 else ARROW_CHARACTER.sub(lambda m: arrow(ARROW_DIRECTIONS[m.group()]), part)
+                   for i, part in enumerate(TAG_OR_TEXT.split(html)))
 SITEMAP = []
 GENERATED = []
 
@@ -155,7 +171,7 @@ def write(relative, text):
 
 def write_page(slug, html):
     slug = slug.strip('/')
-    write((slug or 'index') + '.html', slashless(html))
+    write((slug or 'index') + '.html', line_arrows(slashless(html)))
 
 def article_rows(articles, limit=None):
     html=[]
