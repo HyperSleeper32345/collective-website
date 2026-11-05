@@ -7,6 +7,9 @@
   if (!menu || !toggle) return;
   toggle.addEventListener('click', () => {
     menu.showModal();
+    // Focus the panel, not its first link: showModal would focus the logo, and iOS
+    // Safari draws that as a focus ring on a tap. Tab still reaches the logo next.
+    menu.focus({ preventScroll: true });
     toggle.setAttribute('aria-expanded', 'true');
     document.body.classList.add('dialog-open');
   });

@@ -40,6 +40,22 @@ GTM_CONTAINER = 'GTM-NT8V9Z6W'
 GTM_PREVIEW_ENVIRONMENT = {'auth':'al8LAMD2C2BQln6BaJOdEA','preview':'env-3'}
 NAV = [('approach', 'Approach'), ('capabilities', 'Capabilities'), ('work', 'Work'), ('insights', 'Thinking'), ('about', 'About')]
 ARROW = '<span aria-hidden="true">↗</span>'
+# C-SITE-ARROW-1: iOS and some Android fonts draw the arrow characters as emoji tiles, so
+# every arrow character in a page's text is emitted as one line arrow instead. The drawing
+# is the closing action's arrow (M10 90 90 10M22 10H90V78) on a 24 grid, at the same
+# stroke weight for its size; each direction is that one drawing rotated (styles.css .arrow).
+ARROW_PATH = 'M2.5 21.5 21.5 2.5M5.35 2.5H21.5V18.65'
+ARROW_DIRECTIONS = {'↗':'ne','→':'e','↘':'se','↓':'s','↙':'sw','←':'w','↖':'nw','↑':'n'}
+ARROW_CHARACTER = re.compile('['+''.join(ARROW_DIRECTIONS)+']')
+TAG_OR_TEXT = re.compile(r'(<script\b.*?</script>|<style\b.*?</style>|<title>.*?</title>|<[^>]*>)', re.S)
+
+def arrow(direction='ne'):
+    return f'<svg class="arrow arrow--{direction}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true" focusable="false"><path d="{ARROW_PATH}"/></svg>'
+
+def line_arrows(html):
+    # Text between tags only: attributes, titles, scripts and styles are left as they are.
+    return ''.join(part if i % 2 else ARROW_CHARACTER.sub(lambda m: arrow(ARROW_DIRECTIONS[m.group()]), part)
+                   for i, part in enumerate(TAG_OR_TEXT.split(html)))
 SITEMAP = []
 GENERATED = []
 
@@ -72,7 +88,7 @@ def header(active):
 <a class="header-apply" href="/contact/">Let’s talk {ARROW}</a>
 <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation"><span>Menu</span><span class="menu-lines" aria-hidden="true"></span></button>
 </div></header>
-<dialog class="site-menu" id="site-menu" aria-label="Site navigation"><div class="menu-top"><a class="brand" href="/" aria-label="Collective home">{brand()}</a><button type="button" data-close-menu aria-label="Close navigation">Close <span aria-hidden="true">×</span></button></div><nav aria-label="Mobile navigation"><a href="/">Home</a>{nav_links(active)}<a href="/contact/">Let’s talk {ARROW}</a></nav><div class="menu-bottom"><a href="/partnership/">Ecommerce founding partnership {ARROW}</a><a href="/developer-partnership/">Developer founding partnership {ARROW}</a><span class="mono">Founder-led. Australia.</span></div></dialog>'''
+<dialog class="site-menu" id="site-menu" aria-label="Site navigation" tabindex="-1"><div class="menu-top"><a class="brand" href="/" aria-label="Collective home">{brand()}</a><button type="button" data-close-menu aria-label="Close navigation">Close <span aria-hidden="true">×</span></button></div><nav aria-label="Mobile navigation"><a href="/">Home</a>{nav_links(active)}<a href="/contact/">Let’s talk {ARROW}</a></nav><div class="menu-bottom"><a href="/partnership/">Ecommerce founding partnership {ARROW}</a><a href="/developer-partnership/">Developer founding partnership {ARROW}</a><span class="mono">Founder-led. Australia.</span></div></dialog>'''
 
 def closing(label='Let’s start with your business.'):
     return f'''<section class="site-closing"><div class="page-width"><div class="section-label"><span class="mono">A conversation with Collective</span><span class="mono">Start with the real question</span></div><a href="/contact/" class="closing-action"><span>WHAT’S<br>NEXT?</span><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M10 90 90 10M22 10H90V78"/></svg></a><div class="closing-bottom"><p>{label}</p><a class="mono" href="mailto:{EMAIL}">Email David {ARROW}</a></div></div></section>'''
@@ -155,7 +171,7 @@ def write(relative, text):
 
 def write_page(slug, html):
     slug = slug.strip('/')
-    write((slug or 'index') + '.html', slashless(html))
+    write((slug or 'index') + '.html', line_arrows(slashless(html)))
 
 def article_rows(articles, limit=None):
     html=[]
