@@ -357,11 +357,6 @@
   .article-table--series {table-layout:auto;}
   .article-table--series th,.article-table--series td {overflow-wrap:break-word;}
   .article-table--series thead th {hyphens:auto;}
-  .article-table--reflow,.article-table--reflow thead,.article-table--reflow tbody {display:block;}
-  .article-table--reflow tr {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:12px;}
-  .article-table--reflow-2 tr {grid-template-columns:repeat(2,minmax(0,1fr));}
-  .article-table--reflow th,.article-table--reflow td {padding-inline:0;}
-  .article-table--reflow tr>:first-child {grid-column:1 / -1;}
   .article-end {margin-top:32px;}
   .article-end>.text-action {font-size:15px;}
   .contact-layout {grid-template-columns:1fr; gap:38px; padding-block:35px 49px;}
@@ -419,4 +414,19 @@
   .contact-booking-intro p {font-size:17px; margin-top:19px; max-width:440px;}
   /* With the privacy link removed, Back to top keeps v5's place in the right-hand column. */
   .full-footer-bottom>a:last-child {grid-column:2;}
+}
+/* C-SITE-ARTICLES-1: series tables that cannot fit a phone as a grid reflow (site-src/markdown_article.py). */
+@media(max-width:620px) {
+  .article-table--reflow,.article-table--reflow thead,.article-table--reflow tbody {display:block;}
+  .article-table--reflow tr {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:12px;}
+  .article-table--reflow.article-table--reflow-2 tr {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .article-table--reflow th,.article-table--reflow td {padding-inline:0;}
+  .article-table--reflow tr>:first-child {grid-column:1 / -1;}
+}
+@media(max-width:379px) {
+  .article-table--reflow-narrow,.article-table--reflow-narrow thead,.article-table--reflow-narrow tbody {display:block;}
+  .article-table--reflow-narrow tr {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:12px;}
+  .article-table--reflow-narrow.article-table--reflow-2 tr {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .article-table--reflow-narrow th,.article-table--reflow-narrow td {padding-inline:0;}
+  .article-table--reflow-narrow tr>:first-child {grid-column:1 / -1;}
 }

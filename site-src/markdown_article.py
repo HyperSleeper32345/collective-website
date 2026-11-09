@@ -80,11 +80,17 @@ def table(lines):
     rows = [[c.strip() for c in line.strip().strip('|').split('|')] for line in lines]
     head, rule, body = rows[0], rows[1], rows[2:]
     numeric = [c.endswith(':') and not c.startswith(':') for c in rule]
-    # Four or more columns cannot fit a phone as one row of cells. There (site.css) every
-    # row, the heading row included, reflows on the same small grid: the first cell
-    # across the top and the figures beneath it in two or three columns.
+    # On a phone (13px type, site.css) a table that cannot fit as a grid reflows: every
+    # row, the heading row included, on the same small grid, the first cell across the
+    # top and the figures beneath it. The width is estimated from the longest word in
+    # each column: over 400px it reflows under 620px wide, over 280px under 380px wide.
+    def longest(i):
+        return max([len(w) for r in body for w in r[i].replace('**', '').split()] + [min(len(w), 8) for w in head[i].replace('**', '').split()])
+    estimate = sum(longest(i) * 7.8 + 12 for i in range(len(head)))
     values = len(head) - 1
-    reflow = '' if values < 3 else ' article-table--reflow' + (' article-table--reflow-2' if values == 4 else '')
+    reflow = '' if estimate <= 280 else ' article-table--reflow' if estimate > 400 else ' article-table--reflow-narrow'
+    if reflow and values == 4:
+        reflow += ' article-table--reflow-2'
     def cls(i):
         return ' class="num"' if numeric[i] else ''
     out = [f'<table class="article-table article-table--series{reflow}"><thead><tr>' + ''.join(f'<th scope="col"{cls(i)}>{inline(c)}</th>' for i, c in enumerate(head)) + '</tr></thead><tbody>']
