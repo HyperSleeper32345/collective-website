@@ -198,7 +198,7 @@ def defined_terms(items):
     terms = []
     for (kind, text), nxt in zip(items, items[1:]):
         if kind == 'h3' and nxt[0] == 'p':
-            terms.append({'name': text, 'id': slugify(text), 'description': plain(nxt[1])})
+            terms.append({'name': text, 'id': slugify(text), 'description': re.sub(r'\s+', ' ', unescape(re.sub(r'<[^>]+>', '', nxt[1]))).strip()})
     return terms
 
 def plain(html):

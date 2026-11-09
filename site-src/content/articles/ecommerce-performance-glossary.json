@@ -27,7 +27,7 @@
     {
       "name": "Average order value",
       "id": "average-order-value",
-      "description": "The average revenue associated with the orders in a defined population. Often abbreviated to AOV ."
+      "description": "The average revenue associated with the orders in a defined population. Often abbreviated to AOV."
     },
     {
       "name": "First-order average value",
@@ -42,7 +42,7 @@
     {
       "name": "Cost of goods sold",
       "id": "cost-of-goods-sold",
-      "description": "The cost assigned to products sold during the reporting period. Commonly abbreviated to COGS ."
+      "description": "The cost assigned to products sold during the reporting period. Commonly abbreviated to COGS."
     },
     {
       "name": "Gross profit",
@@ -122,7 +122,7 @@
     {
       "name": "Return on ad spend",
       "id": "return-on-ad-spend",
-      "description": "Attributed conversion value relative to the corresponding advertising spend. Commonly abbreviated to ROAS ."
+      "description": "Attributed conversion value relative to the corresponding advertising spend. Commonly abbreviated to ROAS."
     },
     {
       "name": "Attributed revenue",
@@ -177,7 +177,7 @@
     {
       "name": "Business media CAC",
       "id": "business-media-cac",
-      "description": "Paid media spend relative to first-time customers purchasing during the same reporting period. CAC stands for customer acquisition cost ."
+      "description": "Paid media spend relative to first-time customers purchasing during the same reporting period. CAC stands for customer acquisition cost."
     },
     {
       "name": "Cohort acquisition CAC",
@@ -212,7 +212,7 @@
     {
       "name": "Revenue lifetime value",
       "id": "revenue-lifetime-value",
-      "description": "Cumulative revenue per acquired customer over a specified horizon. Often called revenue LTV ."
+      "description": "Cumulative revenue per acquired customer over a specified horizon. Often called revenue LTV."
     },
     {
       "name": "Gross-profit lifetime value",
