@@ -150,13 +150,14 @@ def link_terms(html, terms, linked):
 
 # The closing phrase of each title carries the brand's one red phrase (David, 10 Nov 2026;
 # C-SITE-ARTICLES-1B). The words stay the title's own: build.py only wraps them in the H1.
+# Each phrase is short enough to stay on the title's last line at 320 to 1440 wide.
 TITLE_RED = {
-    'understanding-ecommerce-commercial-performance': 'commercial performance',
+    'understanding-ecommerce-commercial-performance': 'performance',
     'revenue-contribution-and-operating-profit': 'operating profit',
-    'reading-monthly-and-year-on-year-performance': 'year-on-year performance',
+    'reading-monthly-and-year-on-year-performance': 'performance',
     'mer-roas-and-profitable-growth': 'profitable growth',
     'customer-acquisition-cost-value-and-payback': 'payback',
-    'cash-inventory-and-the-pace-of-growth': 'the pace of growth',
+    'cash-inventory-and-the-pace-of-growth': 'growth',
     GLOSSARY: 'glossary',
 }
 
