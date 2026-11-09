@@ -148,6 +148,19 @@ def link_terms(html, terms, linked):
     parts = re.split(r'(<[^>]+>)', html)
     return ''.join(p if p.startswith('<') else text(p) for p in parts)
 
+# The closing phrase of each title carries the brand's one red phrase (David, 10 Nov 2026;
+# C-SITE-ARTICLES-1B). The words stay the title's own: build.py only wraps them in the H1.
+# Each phrase is short enough to stay on the title's last line at 320 to 1440 wide.
+TITLE_RED = {
+    'understanding-ecommerce-commercial-performance': 'performance',
+    'revenue-contribution-and-operating-profit': 'operating profit',
+    'reading-monthly-and-year-on-year-performance': 'performance',
+    'mer-roas-and-profitable-growth': 'profitable growth',
+    'customer-acquisition-cost-value-and-payback': 'payback',
+    'cash-inventory-and-the-pace-of-growth': 'growth',
+    GLOSSARY: 'glossary',
+}
+
 def convert(source, glossary_md):
     name = source.name
     entry = next(s for s in SERIES if s[0] == name)
@@ -184,7 +197,9 @@ def convert(source, glossary_md):
                 html = html.replace(f'<strong>{escape(t, quote=False)}</strong>', f'<strong><a href="/insights/{s[1]}">{escape(t, quote=False)}</a></strong>')
         body.append(html)
     position = SERIES.index(entry) + 1
-    article = {'slug': slug, 'title': title, 'seo_title': seo_title, 'description': description,
+    if not title.endswith(' ' + TITLE_RED[slug]):
+        raise ValueError(f'{name}: the red phrase {TITLE_RED[slug]!r} is not the close of the title')
+    article = {'slug': slug, 'title': title, 'title_red': TITLE_RED[slug], 'seo_title': seo_title, 'description': description,
                'category': category, 'byline': 'Collective',
                'intro': re.sub(r'<[^>]+>', '', unescape(intro_html)), 'intro_html': intro_html,
                'series': {'name': SERIES_NAME, 'position': position, 'source': name},

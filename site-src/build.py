@@ -181,6 +181,15 @@ def write_page(slug, html):
     slug = slug.strip('/')
     write((slug or 'index') + '.html', line_arrows(slashless(html)))
 
+def article_heading(a):
+    # An article may name the closing phrase of its title as its one red phrase (title_red).
+    title, red = a['title'], a.get('title_red')
+    if not red:
+        return escape(title)
+    if not title.endswith(' ' + red):
+        raise ValueError(f"{a['slug']}: title_red {red!r} is not the close of the title")
+    return f'{escape(title[:-len(red)])}<span class="red-text">{escape(red)}</span>'
+
 def article_rows(articles, limit=None):
     html=[]
     for i,a in enumerate(articles[:limit] if limit else articles,1):
@@ -231,7 +240,7 @@ def main():
             count[0]+=1
             return f'<h2 id="section-{count[0]}">{m.group(1)}</h2>'
         article_body=re.sub(r'<h2[^>]*>(.*?)</h2>',heading,a['body'],flags=re.S)
-        body=f'''<header class="article-hero page-width"><a href="/insights/" class="mono">← All thinking</a><div class="article-meta mono"><span>{escape(a.get('category','Field note'))}</span><span>{reading} minute read</span></div><h1>{escape(a['title'])}</h1><div class="article-standfirst"><span class="mono">By {escape(a.get('byline','Collective'))}</span><p>{a.get('intro_html') or escape(a['intro'])}</p></div></header><section class="article-layout page-width"><aside class="article-contents"><span class="mono">In this note</span><nav aria-label="Article contents">{contents}</nav></aside><article class="article-body">{article_body}<div class="article-end"><span class="mono">Continue the conversation</span><a class="text-action" href="/contact/"><span>What does this mean for your business?</span>{ARROW}</a></div></article></section><section class="page-section page-width related-reading"><div class="section-label"><span class="mono">Keep thinking</span><a class="mono" href="/insights/">All field notes ↗</a></div>{article_rows(related(a,series) if 'series' in a else [x for x in articles if x['slug']!=a['slug']],2)}</section>'''
+        body=f'''<header class="article-hero page-width"><a href="/insights/" class="mono">← All thinking</a><div class="article-meta mono"><span>{escape(a.get('category','Field note'))}</span><span>{reading} minute read</span></div><h1>{article_heading(a)}</h1><div class="article-standfirst"><span class="mono">By {escape(a.get('byline','Collective'))}</span><p>{a.get('intro_html') or escape(a['intro'])}</p></div></header><section class="article-layout page-width"><aside class="article-contents"><span class="mono">In this note</span><nav aria-label="Article contents">{contents}</nav></aside><article class="article-body">{article_body}<div class="article-end"><span class="mono">Continue the conversation</span><a class="text-action" href="/contact/"><span>What does this mean for your business?</span>{ARROW}</a></div></article></section><section class="page-section page-width related-reading"><div class="section-label"><span class="mono">Keep thinking</span><a class="mono" href="/insights/">All field notes ↗</a></div>{article_rows(related(a,series) if 'series' in a else [x for x in articles if x['slug']!=a['slug']],2)}</section>'''
         write_page(p['slug'],page_shell(p,body,False))
     contact={'slug':'contact','title':'Let’s talk','description':'Start a conversation with David Collins about your business, the opportunity and what you would like to change.','nav':'contact','eyebrow':'A conversation with Collective','heading':'LET’S LOOK AT<br><span class="red-text">THE BUSINESS.</span>','intro':'Tell us where you are, where you want to get to and what is getting in the way. You do not need to arrive with the answer.','crumb':'Contact'}
     write_page('contact',page_shell(contact,(CONTENT/'contact.html').read_text()+BOOKING,True,False))
