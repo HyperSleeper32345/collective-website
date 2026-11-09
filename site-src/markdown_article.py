@@ -80,16 +80,16 @@ def table(lines):
     rows = [[c.strip() for c in line.strip().strip('|').split('|')] for line in lines]
     head, rule, body = rows[0], rows[1], rows[2:]
     numeric = [c.endswith(':') and not c.startswith(':') for c in rule]
-    # Four or more columns cannot fit a phone as a grid: there each row stacks, and each
-    # figure is labelled with its column heading from data-label (site.css).
-    stack = len(head) >= 4
+    # Four or more columns cannot fit a phone as one row of cells. There (site.css) every
+    # row, the heading row included, reflows on the same small grid: the first cell
+    # across the top and the figures beneath it in two or three columns.
+    values = len(head) - 1
+    reflow = '' if values < 3 else ' article-table--reflow' + (' article-table--reflow-2' if values == 4 else '')
     def cls(i):
         return ' class="num"' if numeric[i] else ''
-    def label(i):
-        return f' data-label="{escape(head[i].replace("**", ""))}"' if stack else ''
-    out = [f'<table class="article-table article-table--series{" article-table--stack" if stack else ""}"><thead><tr>' + ''.join(f'<th scope="col"{cls(i)}>{inline(c)}</th>' for i, c in enumerate(head)) + '</tr></thead><tbody>']
+    out = [f'<table class="article-table article-table--series{reflow}"><thead><tr>' + ''.join(f'<th scope="col"{cls(i)}>{inline(c)}</th>' for i, c in enumerate(head)) + '</tr></thead><tbody>']
     for r in body:
-        cells = [f'<th scope="row">{inline(r[0])}</th>'] + [f'<td{cls(i)}{label(i)}>{inline(c)}</td>' for i, c in enumerate(r[1:], 1)]
+        cells = [f'<th scope="row">{inline(r[0])}</th>'] + [f'<td{cls(i)}>{inline(c)}</td>' for i, c in enumerate(r[1:], 1)]
         out.append('<tr>' + ''.join(cells) + '</tr>')
     out.append('</tbody></table>')
     return '\n'.join(out)
