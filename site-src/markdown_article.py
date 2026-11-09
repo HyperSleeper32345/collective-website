@@ -82,15 +82,15 @@ def table(lines):
     numeric = [c.endswith(':') and not c.startswith(':') for c in rule]
     # On a phone (13px type, site.css) a table that cannot fit as a grid reflows: every
     # row, the heading row included, on the same small grid, the first cell across the
-    # top and the figures beneath it. The width is estimated from the longest word in
+    # top and the figures beneath it in one line. The width is estimated from the longest word in
     # each column: over 400px it reflows under 620px wide, over 280px under 380px wide.
     def longest(i):
         return max([len(w) for r in body for w in r[i].replace('**', '').split()] + [min(len(w), 8) for w in head[i].replace('**', '').split()])
     estimate = sum(longest(i) * 7.8 + 12 for i in range(len(head)))
     values = len(head) - 1
     reflow = '' if estimate <= 280 else ' article-table--reflow' if estimate > 400 else ' article-table--reflow-narrow'
-    if reflow and values == 4:
-        reflow += ' article-table--reflow-2'
+    if reflow and values > 3:
+        reflow += f' article-table--reflow-{values}'
     def cls(i):
         return ' class="num"' if numeric[i] else ''
     out = [f'<table class="article-table article-table--series{reflow}"><thead><tr>' + ''.join(f'<th scope="col"{cls(i)}>{inline(c)}</th>' for i, c in enumerate(head)) + '</tr></thead><tbody>']
@@ -168,7 +168,7 @@ def convert(source, glossary_md):
     for kind, html in items[2:]:
         if kind in ('h2', 'h3'):
             text = inline(html)
-            attr = f' id="{slugify(html)}"' if slug == GLOSSARY and kind == 'h3' else ''
+            attr = f' id="{slugify(html)}" class="glossary-term"' if slug == GLOSSARY and kind == 'h3' else ''
             body.append(f'<{kind}{attr}>{text}</{kind}>')
             continue
         if kind in ('p', 'ul', 'ol'):

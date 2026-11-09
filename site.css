@@ -155,6 +155,8 @@
 .article-table th { font-weight:550; border-top:1px solid var(--ink); }
 .article-table .num { text-align:right; }
 .article-table--series .num { font-variant-numeric:tabular-nums; }
+.article-body .glossary-term { border-top:1px solid var(--line); padding-top:28px; margin-top:40px; }
+.article-body h2+.glossary-term { border-top:0; padding-top:0; margin-top:28px; }
 .article-body code { font-size:.82em; white-space:normal; }
 .article-end { border-top:1px solid var(--ink); padding-top:27px; margin-top:45px; }
 .article-end>.text-action { font-size:17px; text-decoration:none; }
@@ -419,14 +421,16 @@
 @media(max-width:620px) {
   .article-table--reflow,.article-table--reflow thead,.article-table--reflow tbody {display:block;}
   .article-table--reflow tr {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:12px;}
-  .article-table--reflow.article-table--reflow-2 tr {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .article-table--reflow.article-table--reflow-4 tr {grid-template-columns:repeat(4,minmax(0,1fr));}
+  .article-table--reflow.article-table--reflow-5 tr {grid-template-columns:repeat(5,minmax(0,1fr)); column-gap:8px;}
   .article-table--reflow th,.article-table--reflow td {padding-inline:0;}
   .article-table--reflow tr>:first-child {grid-column:1 / -1;}
 }
 @media(max-width:379px) {
   .article-table--reflow-narrow,.article-table--reflow-narrow thead,.article-table--reflow-narrow tbody {display:block;}
   .article-table--reflow-narrow tr {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:12px;}
-  .article-table--reflow-narrow.article-table--reflow-2 tr {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .article-table--reflow-narrow.article-table--reflow-4 tr {grid-template-columns:repeat(4,minmax(0,1fr));}
+  .article-table--reflow-narrow.article-table--reflow-5 tr {grid-template-columns:repeat(5,minmax(0,1fr)); column-gap:8px;}
   .article-table--reflow-narrow th,.article-table--reflow-narrow td {padding-inline:0;}
   .article-table--reflow-narrow tr>:first-child {grid-column:1 / -1;}
 }
