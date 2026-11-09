@@ -12,8 +12,11 @@ scripts/build-site.py) for the live host, per the C-SITE-V5 brief:
 - Title separators are a vertical bar, never a dash.
 - No privacy page, no legacy alias stubs, no identity study: the six retired routes
   are HTTP 301s in _redirects.
-- JSON-LD: Organization on home, Article and BreadcrumbList on the four articles,
-  BreadcrumbList on the other pages.
+- JSON-LD: Organization on home, Article and BreadcrumbList on every article (and a
+  DefinedTermSet on the series glossary), BreadcrumbList on the other pages.
+- The Commercial Performance series (C-SITE-ARTICLES-1) is converted from its markdown
+  by site-src/markdown_article.py; its articles sort after the four field notes and
+  have their own rows on /insights.
 - The contact page keeps the Antares chat and booking widget beneath the form.
 
 Static styles, scripts and assets live at the repository root, where they are
@@ -137,6 +140,11 @@ def structured_data(p):
                    'author': {'@type': 'Person', 'name': 'David Collins'}, 'publisher': PUBLISHER,
                    'isPartOf': {'@type': 'CollectionPage', 'name': 'Thinking', 'url': page_url('insights')}},
                   breadcrumbs([('Thinking', 'insights'), (a['title'], slug)])]
+        if a.get('defined_terms'):
+            term_set = {'@type': 'DefinedTermSet', '@id': page_url(slug) + '#terms', 'name': a['title'], 'url': page_url(slug)}
+            blocks.append({'@context': 'https://schema.org', **term_set, 'hasDefinedTerm': [
+                {'@type': 'DefinedTerm', 'name': t['name'], 'description': t['description'], 'url': page_url(slug) + '#' + t['id'],
+                 'inDefinedTermSet': {'@id': term_set['@id']}} for t in a['defined_terms']]})
         return ''.join(ld(b) for b in blocks)
     trail = []
     if slug.startswith('work/'):
@@ -173,11 +181,26 @@ def write_page(slug, html):
     slug = slug.strip('/')
     write((slug or 'index') + '.html', line_arrows(slashless(html)))
 
+def article_heading(a):
+    # An article may name the closing phrase of its title as its one red phrase (title_red).
+    title, red = a['title'], a.get('title_red')
+    if not red:
+        return escape(title)
+    if not title.endswith(' ' + red):
+        raise ValueError(f"{a['slug']}: title_red {red!r} is not the close of the title")
+    return f'{escape(title[:-len(red)])}<span class="red-text">{escape(red)}</span>'
+
 def article_rows(articles, limit=None):
     html=[]
     for i,a in enumerate(articles[:limit] if limit else articles,1):
         html.append(f'''<a class="article-row" href="/insights/{a['slug']}/"><span class="mono">0{i} / {escape(a.get('category','Field note'))}</span><div><h3>{escape(a['title'])}</h3><p>{escape(a['description'])}</p></div><span class="row-arrow" aria-hidden="true">↗</span></a>''')
     return '<div class="article-rows">'+''.join(html)+'</div>'
+
+def related(a, series):
+    # A series article's two rows are the pillar and the glossary; theirs are each other and part one.
+    pillar, glossary = series[0], series[-1]
+    rows = [x for x in [pillar, glossary, series[1]] if x['slug'] != a['slug']]
+    return rows[:2]
 
 # Beneath v5's form on /contact: the Antares chat and booking widget kept from the
 # live site (ANTARES-3), styled with v5's tokens (site.css, .contact-booking).
@@ -192,7 +215,9 @@ def main():
     pages=[json.loads(p.read_text()) for p in sorted((CONTENT/'pages').glob('*.json'))]
     articles=[json.loads(p.read_text()) for p in sorted((CONTENT/'articles').glob('*.json'))]
     priority=['independent-growth-business','diagnose-marketing-performance','pipeline-velocity','revenue-and-profit']
-    articles.sort(key=lambda x:priority.index(x['slug']) if x['slug'] in priority else 99)
+    articles.sort(key=lambda x:priority.index(x['slug']) if x['slug'] in priority else 99+x.get('series',{}).get('position',0))
+    notes=[a for a in articles if 'series' not in a]
+    series=[a for a in articles if 'series' in a]
     for p in pages:
         body=p['body']
         if p['slug']=='approach':
@@ -201,19 +226,21 @@ def main():
     home={'slug':'','title':'Collective | Grow what you keep.','description':'An independent growth partner. Collective connects strategy, acquisition, conversion and operations around the commercial priorities of your business. Led by David Collins.','nav':'','body_class':'home-page'}
     body=(CONTENT/'home.html').read_text().replace('<!-- ARTICLE_ROWS -->',article_rows(articles,3))
     write_page('',page_shell(home,body,False))
-    insights={'slug':'insights','title':'Thinking','description':'Field notes on commercial growth, diagnosis and measurement. Practical thinking from Collective.','nav':'insights','eyebrow':'04 / Thinking','heading':'THE QUESTIONS<br>BEHIND <span class="red-text">THE WORK.</span>','intro':'A closer look at the decisions that shape growth. What to measure, where to look, and why the next move depends on the business.'}
-    intro='<section class="page-section page-width" id="field-notes"><div class="section-label" id="frameworks"><span class="mono">Field notes / Read in full</span><span class="mono">A point of view, put to work</span></div>'+article_rows(articles)+'</section>'
+    insights={'slug':'insights','title':'Thinking','description':'Field notes on commercial growth, diagnosis and measurement. A seven-part series on ecommerce commercial performance. Practical thinking from Collective.','nav':'insights','eyebrow':'04 / Thinking','heading':'THE QUESTIONS<br>BEHIND <span class="red-text">THE WORK.</span>','intro':'A closer look at the decisions that shape growth. What to measure, where to look, and why the next move depends on the business.'}
+    intro='<section class="page-section page-width" id="field-notes"><div class="section-label" id="frameworks"><span class="mono">Field notes / Read in full</span><span class="mono">A point of view, put to work</span></div>'+article_rows(notes)+'</section>'
+    if series:
+        intro+='<section class="page-section page-width" id="commercial-performance"><div class="section-label"><span class="mono">Commercial performance series / Read in order</span><span class="mono">Ecommerce, from revenue to cash</span></div>'+article_rows(series)+'</section>'
     write_page('insights',page_shell(insights,intro))
     for a in articles:
         reading=max(1,round(len(re.sub('<[^>]+>',' ',a['body']).split())/220))
-        p={'slug':'insights/'+a['slug'],'title':a['title'],'description':a['description'],'nav':'insights','body_class':'article-page','article':a}
+        p={'slug':'insights/'+a['slug'],'title':a.get('seo_title',a['title']),'description':a['description'],'nav':'insights','body_class':'article-page','article':a}
         contents=''.join(f'<a href="#section-{i}">{escape(re.sub("<[^>]+>","",h))}</a>' for i,h in enumerate(re.findall(r'<h2[^>]*>(.*?)</h2>',a['body'],re.S),1))
         count=[0]
         def heading(m):
             count[0]+=1
             return f'<h2 id="section-{count[0]}">{m.group(1)}</h2>'
         article_body=re.sub(r'<h2[^>]*>(.*?)</h2>',heading,a['body'],flags=re.S)
-        body=f'''<header class="article-hero page-width"><a href="/insights/" class="mono">← All thinking</a><div class="article-meta mono"><span>{escape(a.get('category','Field note'))}</span><span>{reading} minute read</span></div><h1>{escape(a['title'])}</h1><div class="article-standfirst"><span class="mono">By {escape(a.get('byline','Collective'))}</span><p>{escape(a['intro'])}</p></div></header><section class="article-layout page-width"><aside class="article-contents"><span class="mono">In this note</span><nav aria-label="Article contents">{contents}</nav></aside><article class="article-body">{article_body}<div class="article-end"><span class="mono">Continue the conversation</span><a class="text-action" href="/contact/"><span>What does this mean for your business?</span>{ARROW}</a></div></article></section><section class="page-section page-width related-reading"><div class="section-label"><span class="mono">Keep thinking</span><a class="mono" href="/insights/">All field notes ↗</a></div>{article_rows([x for x in articles if x['slug']!=a['slug']],2)}</section>'''
+        body=f'''<header class="article-hero page-width"><a href="/insights/" class="mono">← All thinking</a><div class="article-meta mono"><span>{escape(a.get('category','Field note'))}</span><span>{reading} minute read</span></div><h1>{article_heading(a)}</h1><div class="article-standfirst"><span class="mono">By {escape(a.get('byline','Collective'))}</span><p>{a.get('intro_html') or escape(a['intro'])}</p></div></header><section class="article-layout page-width"><aside class="article-contents"><span class="mono">In this note</span><nav aria-label="Article contents">{contents}</nav></aside><article class="article-body">{article_body}<div class="article-end"><span class="mono">Continue the conversation</span><a class="text-action" href="/contact/"><span>What does this mean for your business?</span>{ARROW}</a></div></article></section><section class="page-section page-width related-reading"><div class="section-label"><span class="mono">Keep thinking</span><a class="mono" href="/insights/">All field notes ↗</a></div>{article_rows(related(a,series) if 'series' in a else [x for x in articles if x['slug']!=a['slug']],2)}</section>'''
         write_page(p['slug'],page_shell(p,body,False))
     contact={'slug':'contact','title':'Let’s talk','description':'Start a conversation with David Collins about your business, the opportunity and what you would like to change.','nav':'contact','eyebrow':'A conversation with Collective','heading':'LET’S LOOK AT<br><span class="red-text">THE BUSINESS.</span>','intro':'Tell us where you are, where you want to get to and what is getting in the way. You do not need to arrive with the answer.','crumb':'Contact'}
     write_page('contact',page_shell(contact,(CONTENT/'contact.html').read_text()+BOOKING,True,False))
