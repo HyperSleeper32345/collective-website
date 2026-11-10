@@ -271,19 +271,19 @@ def author_box():
 AUTHOR_EXPERIENCE = [
     'Founder and director of Collective, which has been operating for more than four years.',
     'Founder and director of Stratosphere, a marketing practice for property development, property investment, construction and trades, and buyers agents.',
-    'In-house sales and marketing leadership at <a href="/work/little-fish">Little Fish Property Developments</a>: CRM, acquisition, customer journeys, automation and demand generation.',
+    'In-house sales and marketing leadership at <a href="/work/little-fish">Little Fish Property Developments</a>: customer relationship management (CRM) and reporting, acquisition, automation and demand generation.',
     'Digital Account Director at Impressive Digital, 2020 to 2021, and Senior Digital Account Manager at King Kong, 2018 to 2020.',
     'Studied business at the University of the Sunshine Coast, majoring in marketing and management.',
     'Built HyperCtrl, the operating system Collective uses as execution infrastructure behind the work.',
 ]
 AUTHOR_RECOGNITION = [
-    'Listed by PPC Experts in its Top 100 Most Influential PPC Experts, 2023 and 2024: top 50 globally, first in Australia.',
+    'Listed by PPC Experts in its Top 100 Most Influential PPC Experts, 2023 and 2024. David placed in the top 50 globally and first in Australia. PPC is pay-per-click advertising.',
     'Australian Financial Review Top 100 Fast Starters, 2022, for Little Fish Property Developments. The listing belongs to that business; David led the sales and marketing strategy behind the growth it was listed for.',
     'Australian Enterprise Awards, Best Residential Property Development Firm, Melbourne, 2021 and 2022, for Little Fish Property Developments. The award belongs to that business, where David led sales and marketing.',
 ]
 
 def author_page(articles):
-    page = {'slug': AUTHOR_SLUG, 'title': 'David Collins, founder and director', 'description': 'David Collins is the founder and director of Collective and the author of its articles. His experience, recognition and every article he has written.',
+    page = {'slug': AUTHOR_SLUG, 'title': 'David Collins, founder and director', 'description': 'David Collins is the founder and director of Collective and the author of its articles. His experience, recognition and every article he has written for Collective.',
             'nav': 'about', 'eyebrow': '05 / About the author', 'heading': 'DAVID<br><span class="red-text">COLLINS.</span>', 'hero_note': AUTHOR_ROLE, 'intro': AUTHOR_BIO,
             'hero_action': {'href': LINKEDIN, 'label': 'David Collins on LinkedIn'}}
     lines = lambda items: ''.join(f'<p>{x}</p>' for x in items)
