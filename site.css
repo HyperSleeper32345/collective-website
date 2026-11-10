@@ -433,9 +433,12 @@
   .article-table--reflow.article-table--reflow-5 tr {column-gap:6px;}
   .article-table--reflow.article-table--reflow-5 thead th {font-size:11px;}
   .article-table--reflow-narrow,.article-table--reflow-narrow thead,.article-table--reflow-narrow tbody {display:block;}
-  .article-table--reflow-narrow tr {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:12px;}
-  .article-table--reflow-narrow.article-table--reflow-4 tr {grid-template-columns:repeat(4,minmax(0,1fr));}
-  .article-table--reflow-narrow.article-table--reflow-5 tr {grid-template-columns:repeat(5,minmax(0,1fr)); column-gap:6px;}
+  .article-table--reflow-narrow tr {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:8px;}
+  .article-table--reflow-narrow.article-table--reflow-4 tr {grid-template-columns:repeat(4,minmax(0,1fr)); column-gap:4px;}
+  .article-table--reflow-narrow.article-table--reflow-5 tr {grid-template-columns:repeat(5,minmax(0,1fr)); column-gap:4px;}
   .article-table--reflow-narrow th,.article-table--reflow-narrow td {padding-inline:0;}
   .article-table--reflow-narrow tr>:first-child {grid-column:1 / -1;}
+  /* A long single-word heading (for example Replenishment) cannot be hyphenated
+     reliably, so the heading row drops a size to sit whole in its narrow column. */
+  .article-table--reflow-narrow thead th {font-size:10px; line-height:1.3;}
 }
