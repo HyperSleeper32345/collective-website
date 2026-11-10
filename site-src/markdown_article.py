@@ -54,17 +54,53 @@ SERIES = [
      'Why profit and cash follow different timing. How to read a cash forecast by date, stock cover and the reserve that limits growth.',
      'Commercial performance'),
     ('06-ecommerce-performance-glossary.md', GLOSSARY,
-     'Ecommerce performance glossary: revenue, profit, MER, CAC and cash',
+     'Ecommerce glossary: profit, MER, CAC and cash',
      'Definitions and calculations for the measures in the Commercial Performance series. Revenue, contribution, profit, MER, ROAS, CAC, LTV, payback and cash.',
      'Reference'),
 ]
 PILLAR = SERIES[0][1]
 
-# Phrases already in the text that name another part of the series: (source file, phrase, slug).
+# Phrases already in the text that name another part of the series, or a live service page:
+# (source file, phrase, destination). The first whole-phrase occurrence in the file's body
+# paragraphs and lists is wrapped; the words stay as they are (C-SITE-ARTICLES-2).
 SERIES_PHRASES = [
     ('02-reading-monthly-and-year-on-year-performance.md', 'the previous article', 'revenue-contribution-and-operating-profit'),
     ('04-customer-acquisition-cost-customer-value-and-payback.md', 'this series', PILLAR),
+    ('00-understanding-ecommerce-commercial-performance.md', 'An executive dashboard', '/capabilities#operations'),
+    ('02-reading-monthly-and-year-on-year-performance.md', 'MER', 'mer-roas-and-profitable-growth'),
+    ('03-mer-roas-and-profitable-growth.md', 'this series', PILLAR),
+    ('03-mer-roas-and-profitable-growth.md', 'acquisition cost, customer value and payback', 'customer-acquisition-cost-value-and-payback'),
+    ('04-customer-acquisition-cost-customer-value-and-payback.md', 'profit, inventory and available cash', 'cash-inventory-and-the-pace-of-growth'),
+    ('05-cash-inventory-and-the-pace-of-growth.md', 'earlier articles', PILLAR),
+    ('05-cash-inventory-and-the-pace-of-growth.md', 'previous article', 'customer-acquisition-cost-value-and-payback'),
+    ('06-ecommerce-performance-glossary.md', 'this series', PILLAR),
 ]
+
+def href(target):
+    return target if target.startswith('/') else f'/insights/{target}'
+
+def outside_links(html, change):
+    """Apply change to the text between tags that is not already inside a link."""
+    out, depth = [], 0
+    for part in re.split(r'(<[^>]+>)', html):
+        if part.startswith('<'):
+            depth += 1 if re.match(r'<a\b', part) else -1 if part.startswith('</a') else 0
+            out.append(part)
+        else:
+            out.append(change(part) if depth == 0 else part)
+    return ''.join(out)
+
+def link_phrase(html, phrase, target):
+    """Wrap the first whole-phrase occurrence outside a link; return the html and whether it was found."""
+    pattern = re.compile(r'(?<![\w-])' + re.escape(phrase) + r'(?![\w-])')
+    done = [False]
+    def change(text):
+        if done[0]:
+            return text
+        new = pattern.sub(lambda m: f'<a href="{href(target)}">{m.group(0)}</a>', text, count=1)
+        done[0] = new != text
+        return new
+    return outside_links(html, change), done[0]
 
 def slugify(text):
     return re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')
@@ -145,8 +181,7 @@ def link_terms(html, terms, linked):
             linked.add(key)
             return f'<a href="/insights/{GLOSSARY}#{slugify(key)}">{m.group(1)}</a>'
         return pattern.sub(wrap, segment)
-    parts = re.split(r'(<[^>]+>)', html)
-    return ''.join(p if p.startswith('<') else text(p) for p in parts)
+    return outside_links(html, text)
 
 # The closing phrase of each title carries the brand's one red phrase (David, 10 Nov 2026;
 # C-SITE-ARTICLES-1B). The words stay the title's own: build.py only wraps them in the H1.
@@ -177,6 +212,7 @@ def convert(source, glossary_md):
     terms = [] if slug == GLOSSARY else [t for t in glossary_terms(glossary_md) if ' ' in t or '-' in t]
     linked = set()
     phrases = [(p, s) for f, p, s in SERIES_PHRASES if f == name]
+    expected = len(phrases)
     body = []
     for kind, html in items[2:]:
         if kind in ('h2', 'h3'):
@@ -185,10 +221,10 @@ def convert(source, glossary_md):
             body.append(f'<{kind}{attr}>{text}</{kind}>')
             continue
         if kind in ('p', 'ul', 'ol'):
-            for phrase, target in phrases:
-                if phrase in html:
-                    html = html.replace(phrase, f'<a href="/insights/{target}">{phrase}</a>', 1)
-                    phrases = [x for x in phrases if x[0] != phrase]
+            for phrase, target in list(phrases):
+                html, found = link_phrase(html, phrase, target)
+                if found:
+                    phrases.remove((phrase, target))
             html = link_terms(html, terms, linked)
         if kind == 'table' and slug == PILLAR:
             # The pillar's series table names each article in bold: the name links to it.
@@ -196,11 +232,13 @@ def convert(source, glossary_md):
                 t = next(b for k, b in blocks((source.parent / s[0]).read_text()) if k == 'h1')
                 html = html.replace(f'<strong>{escape(t, quote=False)}</strong>', f'<strong><a href="/insights/{s[1]}">{escape(t, quote=False)}</a></strong>')
         body.append(html)
+    if phrases:
+        raise ValueError(f'{name}: {len(phrases)} of {expected} series phrases not found: {phrases}')
     position = SERIES.index(entry) + 1
     if not title.endswith(' ' + TITLE_RED[slug]):
         raise ValueError(f'{name}: the red phrase {TITLE_RED[slug]!r} is not the close of the title')
     article = {'slug': slug, 'title': title, 'title_red': TITLE_RED[slug], 'seo_title': seo_title, 'description': description,
-               'category': category, 'byline': 'Collective',
+               'category': category, 'byline': 'David Collins',
                'intro': re.sub(r'<[^>]+>', '', unescape(intro_html)), 'intro_html': intro_html,
                'series': {'name': SERIES_NAME, 'position': position, 'source': name},
                'body': '\n'.join(body)}
