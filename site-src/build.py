@@ -282,12 +282,15 @@ AUTHOR_RECOGNITION = [
     'Australian Enterprise Awards, Best Residential Property Development Firm, Melbourne, 2021 and 2022, for Little Fish Property Developments. The award belongs to that business, where David led sales and marketing.',
 ]
 
+AUTHOR_SOURCES = ('Sources: <a href="/about">the Collective about page</a> and <a href="https://www.stratospheregroup.com.au/about/david-collins/">'
+                  'David’s author page on the Stratosphere website</a>, read 10 November 2026.')
+
 def author_page(articles):
     page = {'slug': AUTHOR_SLUG, 'title': 'David Collins, founder and director', 'description': 'David Collins is the founder and director of Collective and the author of its articles. His experience, recognition and every article he has written for Collective.',
             'nav': 'about', 'eyebrow': '05 / About the author', 'heading': 'DAVID<br><span class="red-text">COLLINS.</span>', 'hero_note': AUTHOR_ROLE, 'intro': AUTHOR_BIO,
             'hero_action': {'href': LINKEDIN, 'label': 'David Collins on LinkedIn'}}
     lines = lambda items: ''.join(f'<p>{x}</p>' for x in items)
-    body = f'''<section class="page-section page-width"><div class="section-label"><span class="mono">01 / Experience</span><span class="mono">Agency, in-house and founder roles</span></div><div class="section-split"><h2 class="display-heading">THE WORK<br>BEHIND THE<br><span class="red-text">WRITING.</span></h2><div class="prose author-lines">{lines(AUTHOR_EXPERIENCE)}</div></div></section><section class="page-section page-width"><div class="section-label"><span class="mono">02 / Recognition</span><span class="mono">Each listing names who it belongs to</span></div><div class="section-split"><h2 class="display-heading">THE<br><span class="red-text">RECOGNITION.</span></h2><div class="prose author-lines">{lines(AUTHOR_RECOGNITION)}<a class="text-action" href="{LINKEDIN}" target="_blank" rel="me noopener"><span>David Collins on LinkedIn</span>{linkedin_icon()}</a></div></div></section><section class="page-section page-width"><div class="section-label"><span class="mono">03 / Articles</span><span class="mono">Every article on Collective</span></div>{article_rows(articles)}</section>'''
+    body = f'''<section class="page-section page-width"><div class="section-label"><span class="mono">01 / Experience</span><span class="mono">Agency, in-house and founder roles</span></div><div class="section-split"><h2 class="display-heading">THE WORK<br>BEHIND THE<br><span class="red-text">WRITING.</span></h2><div class="prose author-lines">{lines(AUTHOR_EXPERIENCE)}<p class="author-sources">{AUTHOR_SOURCES}</p></div></div></section><section class="page-section page-width"><div class="section-label"><span class="mono">02 / Recognition</span><span class="mono">Each listing names who it belongs to</span></div><div class="section-split"><h2 class="display-heading">THE<br><span class="red-text">RECOGNITION.</span></h2><div class="prose author-lines">{lines(AUTHOR_RECOGNITION)}<p class="author-sources">Source: <a href="https://www.stratospheregroup.com.au/about/david-collins/">David’s author page on the Stratosphere website</a>, read 10 November 2026.</p><a class="text-action" href="{LINKEDIN}" target="_blank" rel="me noopener"><span>David Collins on LinkedIn</span>{linkedin_icon()}</a></div></div></section><section class="page-section page-width"><div class="section-label"><span class="mono">03 / Articles</span><span class="mono">Every article on Collective</span></div>{article_rows(articles)}</section>'''
     return page, body
 
 def llms_txt(articles):
@@ -297,8 +300,13 @@ def llms_txt(articles):
              'Every article is written by David Collins, founder and director of Collective: ' + page_url(AUTHOR_SLUG), '', '## Articles', '']
     lines += [f'- [{a["title"]}]({page_url("insights/" + a["slug"])}): {a["description"]}' for a in articles]
     lines += ['', '## Pages', '']
+    # Three pages' own descriptions read as lists of terms; their lines here are taken from their introductions or say what the page holds.
+    lines_for = {'partnership': 'A partnership for two ecommerce businesses, with David directly involved in the decisions and the work.',
+                 'developer-partnership': 'A partnership for property developers building a business and brand across projects.',
+                 'about': 'Who leads Collective, how the work comes together, and the businesses beside it.'}
     for slug in ['', 'approach', 'capabilities', 'work', 'insights', 'about', AUTHOR_SLUG, 'partnership', 'developer-partnership', 'contact']:
         name, description = PAGE_INDEX[slug]
+        description = lines_for.get(slug, description)
         lines.append(f'- [{name}]({page_url(slug)}): {description}')
     return '\n'.join(lines) + '\n'
 
