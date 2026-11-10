@@ -282,7 +282,7 @@ AUTHOR_RECOGNITION = [
     'Australian Enterprise Awards, Best Residential Property Development Firm, Melbourne, 2021 and 2022, for Little Fish Property Developments. The award belongs to that business, where David led sales and marketing.',
 ]
 
-AUTHOR_SOURCES = ('Sources: <a href="/about">the Collective about page</a>, <a href="/work/little-fish">the Little Fish page</a> and <a href="https://www.stratospheregroup.com.au/about/david-collins/">'
+AUTHOR_SOURCES = ('Sources: <a href="/about">the Collective about page</a>, <a href="/work/little-fish">the Collective Little Fish page</a> and <a href="https://www.stratospheregroup.com.au/about/david-collins/">'
                   'David’s author page on the Stratosphere website</a>, read 10 November 2026.')
 
 def author_page(articles):
