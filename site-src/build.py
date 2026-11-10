@@ -277,12 +277,12 @@ AUTHOR_EXPERIENCE = [
     'Built HyperCtrl, the operating system Collective uses as execution infrastructure behind the work.',
 ]
 AUTHOR_RECOGNITION = [
-    'Listed by PPC Experts in its Top 100 Most Influential PPC Experts, 2023 and 2024. David placed in the top 50 globally and first in Australia. PPC is pay-per-click advertising.',
+    'PPC Experts Top 100 Most Influential PPC Experts, 2023 and 2024. David placed in the top 50 globally and first in Australia. PPC is pay-per-click advertising.',
     'Australian Financial Review Top 100 Fast Starters, 2022, for Little Fish Property Developments. The listing belongs to that business; David led the sales and marketing strategy behind the growth it was listed for.',
     'Australian Enterprise Awards, Best Residential Property Development Firm, Melbourne, 2021 and 2022, for Little Fish Property Developments. The award belongs to that business, where David led sales and marketing.',
 ]
 
-AUTHOR_SOURCES = ('Sources: <a href="/about">the Collective about page</a> and <a href="https://www.stratospheregroup.com.au/about/david-collins/">'
+AUTHOR_SOURCES = ('Sources: <a href="/about">the Collective about page</a>, <a href="/work/little-fish">the Little Fish page</a> and <a href="https://www.stratospheregroup.com.au/about/david-collins/">'
                   'David’s author page on the Stratosphere website</a>, read 10 November 2026.')
 
 def author_page(articles):
