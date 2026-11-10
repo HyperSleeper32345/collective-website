@@ -468,3 +468,4 @@
   .article-author-name {font-size:21px;}
   .article-author-bio {font-size:16px;}
 }
+.partnership-feature p a,.faq-list details>p a { text-decoration:underline; text-underline-offset:4px; }

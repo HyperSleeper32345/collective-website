@@ -354,6 +354,7 @@ def main():
         write_page(p['slug'],page_shell(p,body,False))
         LASTMOD[page_url(p['slug'])] = DATES[a['slug']][2]
     write_page(AUTHOR_SLUG, page_shell(*author_page(articles)))
+    LASTMOD[page_url(AUTHOR_SLUG)] = '2026-11-10'
     contact={'slug':'contact','title':'Let’s talk','description':'Start a conversation with David Collins about your business, the opportunity and what you would like to change.','nav':'contact','eyebrow':'A conversation with Collective','heading':'LET’S LOOK AT<br><span class="red-text">THE BUSINESS.</span>','intro':'Tell us where you are, where you want to get to and what is getting in the way. You do not need to arrive with the answer.','crumb':'Contact'}
     write_page('contact',page_shell(contact,(CONTENT/'contact.html').read_text()+BOOKING,True,False))
     partnership={'slug':'partnership','title':'Ecommerce founding partnership','description':'Two founding ecommerce partnerships with direct founder involvement. AUD $10,000 per month + GST for agreed scope; implementation, advertising and agreed third-party costs additional.','nav':'','eyebrow':'The ecommerce founding partnership','heading':'A CLOSER<br><span class="red-text">PARTNERSHIP.</span>','intro':'A close working partnership for two established ecommerce businesses. One commercial plan, connected delivery and David directly involved in the decisions and the work.','hero_note':'Two places. Staggered onboarding.'}
